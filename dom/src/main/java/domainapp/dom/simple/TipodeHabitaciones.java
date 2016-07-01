@@ -28,6 +28,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
@@ -35,9 +37,12 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+
+import domainapp.dom.simple.TipodeHabitacion.Ecama;
+
 @DomainService(
         nature = NatureOfService.VIEW,
-        repositoryFor = SimpleObject.class
+        repositoryFor = TipodeHabitacion.class
 )
 @DomainServiceLayout(
         menuOrder = "10"
@@ -58,8 +63,8 @@ public class TipodeHabitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<SimpleObject> listAll() {
-        return repositoryService.allInstances(SimpleObject.class);
+    public List<TipodeHabitacion> listAll() {
+        return repositoryService.allInstances(TipodeHabitacion.class);
     }
     //endregion
 
@@ -71,13 +76,13 @@ public class TipodeHabitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
+    public List<TipodeHabitacion> findByName(
             @ParameterLayout(named="Name")
             final String name
     ) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        SimpleObject.class,
+                        TipodeHabitacion.class,
                         "findByName",
                         "name", name));
     }
@@ -94,10 +99,17 @@ public class TipodeHabitaciones {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public SimpleObject create(
-            final @ParameterLayout(named="Nombre") String name) {
-        final SimpleObject obj = repositoryService.instantiate(SimpleObject.class);
+    public TipodeHabitacion create(
+            final @ParameterLayout(named="Nombre") String name,
+           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Ecama ccama
+           /* final @ParameterLayout(named = "Cantidad de Camas") String
+    		final Ecama ccama*/) {
+        final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
         obj.setName(name);
+        obj.setCama(ccama);
+       // obj.setName(ccama);
+       // obj //.setCama(ccama);
+        //obj.setCama(ccama); //.setCama(Ecama);
         repositoryService.persist(obj);
         return obj;
     }

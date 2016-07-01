@@ -19,10 +19,12 @@
 package domainapp.dom.simple;
 
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -34,7 +36,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "SimpleObject"
+        table = "TipodeHabitacion"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -47,14 +49,14 @@ import org.apache.isis.applib.util.ObjectContracts;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "),
+                        + "FROM domainapp.dom.simple.TipodeHabitacion"),
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "
+                        + "FROM domainapp.dom.simple.TipodeHabitacion "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="TipodeHabitacion_name_UNQ", members = {"name"})
 @DomainObject
 public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
 
@@ -82,6 +84,20 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         this.name = name;
     }
 
+    private Ecama ccama;
+    
+    @Persistent
+   // @MemberOrder(sequence = "2")
+	@javax.jdo.annotations.Column(allowsNull="false")
+	
+    public Ecama getCama() {
+    	return ccama;
+    }
+    
+    public void setCama(Ecama ccama)  {
+    	this.ccama = ccama;
+    }
+    
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
@@ -104,7 +120,10 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         return ObjectContracts.compare(this, other, "name");
     }
 
-
+    public enum Ecama{
+    	
+	uno,dos,tres,cuatro
+	}
     @javax.inject.Inject
     RepositoryService repositoryService;
 
