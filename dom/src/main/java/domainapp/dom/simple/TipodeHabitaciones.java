@@ -39,7 +39,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 
 import domainapp.dom.simple.TipodeHabitacion.Ecama;
-
+import domainapp.dom.simple.TipodeHabitacion.Etipodeprecio; 
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = TipodeHabitacion.class
@@ -101,15 +101,14 @@ public class TipodeHabitaciones {
     @MemberOrder(sequence = "3")
     public TipodeHabitacion create(
             final @ParameterLayout(named="Nombre") String name,
-           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Ecama ccama
-           /* final @ParameterLayout(named = "Cantidad de Camas") String
-    		final Ecama ccama*/) {
+           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Ecama ccama,
+           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Tipo de Precio") Etipodeprecio tprecio
+           ) {
         final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
         obj.setName(name);
         obj.setCama(ccama);
-       // obj.setName(ccama);
-       // obj //.setCama(ccama);
-        //obj.setCama(ccama); //.setCama(Ecama);
+        obj.setTprecio(tprecio);
+       
         repositoryService.persist(obj);
         return obj;
     }

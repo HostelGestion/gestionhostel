@@ -87,7 +87,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     private Ecama ccama;
     
     @Persistent
-   // @MemberOrder(sequence = "2")
+    @MemberOrder(sequence = "2")
 	@javax.jdo.annotations.Column(allowsNull="false")
 	
     public Ecama getCama() {
@@ -96,6 +96,20 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     
     public void setCama(Ecama ccama)  {
     	this.ccama = ccama;
+    }
+    
+    private Etipodeprecio tprecio;
+
+    @Persistent
+    @MemberOrder(sequence = "3")
+	@javax.jdo.annotations.Column(allowsNull="false")
+	
+    public Etipodeprecio getTprecio() {
+    	return tprecio;
+    }
+    
+    public void setTprecio (Etipodeprecio tprecio)  {
+    	this.tprecio = tprecio;
     }
     
     public TranslatableString validateName(final String name) {
@@ -124,6 +138,11 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     	
 	uno,dos,tres,cuatro
 	}
+    public enum Etipodeprecio{
+    	
+    	Privada,Dormis
+    	}
+    
     @javax.inject.Inject
     RepositoryService repositoryService;
 
