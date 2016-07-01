@@ -111,7 +111,20 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     public void setTprecio (Etipodeprecio tprecio)  {
     	this.tprecio = tprecio;
     }
+   
+    private Etipodesexo tsexo;
+
+    @Persistent
+    @MemberOrder(sequence = "3")
+	@javax.jdo.annotations.Column(allowsNull="false")
+	
+    public Etipodesexo getTsexo() {
+    	return tsexo;
+    }
     
+    public void setTsexo (Etipodesexo tsexo)  {
+    	this.tsexo = tsexo;
+    }
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
@@ -141,6 +154,10 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     public enum Etipodeprecio{
     	
     	Privada,Dormis
+    	}
+    public enum Etipodesexo{
+    	
+    	Masculino,Femenino,Mixto
     	}
     
     @javax.inject.Inject
