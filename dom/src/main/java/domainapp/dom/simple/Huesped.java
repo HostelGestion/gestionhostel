@@ -34,7 +34,7 @@ import org.apache.isis.applib.util.ObjectContracts;
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "SimpleObject"
+        table = "Huesped"
 )
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -47,14 +47,14 @@ import org.apache.isis.applib.util.ObjectContracts;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "),
+                        + "FROM domainapp.dom.simple.Huesped "),
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.SimpleObject "
+                        + "FROM domainapp.dom.simple.Huesped "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="SimpleObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Huesped_name_UNQ", members = {"name"})
 @DomainObject
 public class Huesped implements Comparable<Huesped> {
 
@@ -62,7 +62,7 @@ public class Huesped implements Comparable<Huesped> {
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+        return TranslatableString.tr("Huésped: {name}", "name", getName());
     }
 
 
@@ -82,11 +82,74 @@ public class Huesped implements Comparable<Huesped> {
         this.name = name;
     }
 
-    public TranslatableString validateName(final String name) {
-        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
+    
+    
+    private String numTel;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public String getNumTel() {
+        return numTel;
     }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setNumTel(final String numTel) {
+        this.numTel = numTel;
+    }
+    
+    private String email;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public String getEmail() {
+        return email;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+    
+    private String domicilio;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public String getDomicilio() {
+        return domicilio;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setDomicilio(final String domicilio) {
+        this.domicilio = domicilio;
+    }
+    
+    
+    private ListaPais pais;
+    
+    
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public ListaPais getPais() { 
+    	return pais; 
+    }
+    public void setPais(final ListaPais pais) {
+    	this.pais = pais;
+    }
+    
 
+    
+    private E_titular titularRes;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public E_titular getTitularRes() {
+    	return titularRes; 
+    }
+    public void setTitularRes(E_titular titularRes) {
+    	this.titularRes = titularRes;
+    }
+    
+    private E_canalVenta canalVenta;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public E_canalVenta getCanalVenta() {
+    	return canalVenta; 
+    }
+    public void setCanalVenta(E_canalVenta canalVenta) {
+    	this.canalVenta = canalVenta;
+    }
+    
 
+    public TranslatableString validateName(final String name) {
+        return name != null && name.contains("!")? TranslatableString.tr("El signo de exclamación no está permitido"): null;
+    }
 
     public static class DeleteDomainEvent extends ActionDomainEvent<Huesped> {}
     @Action(
@@ -103,7 +166,14 @@ public class Huesped implements Comparable<Huesped> {
     public int compareTo(final Huesped other) {
         return ObjectContracts.compare(this, other, "name");
     }
-
+    
+    public enum E_titular{
+    	TITULAR, NOTITULAR;
+    }
+    
+    public enum E_canalVenta{
+    	Booking, Despegar;
+    }
 
     @javax.inject.Inject
     RepositoryService repositoryService;

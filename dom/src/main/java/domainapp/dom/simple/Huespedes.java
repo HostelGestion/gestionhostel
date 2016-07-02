@@ -19,6 +19,7 @@
 package domainapp.dom.simple;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
@@ -28,6 +29,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
@@ -35,9 +38,12 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.simple.Huesped.E_canalVenta;
+import domainapp.dom.simple.Huesped.E_titular;
+
 @DomainService(
         nature = NatureOfService.VIEW,
-        repositoryFor = SimpleObject.class
+        repositoryFor = Huesped.class
 )
 @DomainServiceLayout(
         menuOrder = "10"
@@ -46,7 +52,7 @@ public class Huespedes {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Simple Objects");
+        return TranslatableString.tr("Húespedes");
     }
     //endregion
 
@@ -58,8 +64,8 @@ public class Huespedes {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<SimpleObject> listAll() {
-        return repositoryService.allInstances(SimpleObject.class);
+    public List<Huesped> listAll() {
+        return repositoryService.allInstances(Huesped.class);
     }
     //endregion
 
@@ -71,13 +77,13 @@ public class Huespedes {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
+    public List<Huesped> findByName(
             @ParameterLayout(named="Name")
             final String name
     ) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        SimpleObject.class,
+                        Huesped.class,
                         "findByName",
                         "name", name));
     }
@@ -94,10 +100,29 @@ public class Huespedes {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public SimpleObject create(
-            final @ParameterLayout(named="Name") String name) {
-        final SimpleObject obj = repositoryService.instantiate(SimpleObject.class);
+    public Huesped create(
+            final
+            @ParameterLayout(named="Nombre")String name, 
+    		@ParameterLayout(named="Teléfono")String numTel,
+            @Parameter(
+                    regexPattern = "(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+",
+                    regexPatternFlags = Pattern.CASE_INSENSITIVE,
+                    regexPatternReplacement = "Ingrese una dirección de correo electrónico válida (contienen un símbolo '@') -"   
+                )
+    		@ParameterLayout(named="Email") String email,
+    		@ParameterLayout(named="Domicilio")String domicilio,
+    		@ParameterLayout(named="País")ListaPais pais,
+    		@ParameterLayout(named="Titular reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
+    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) E_canalVenta canalVenta) {
+        final Huesped obj = repositoryService.instantiate(Huesped.class);
         obj.setName(name);
+        obj.setNumTel(numTel);
+        obj.setEmail(email);
+        obj.setDomicilio(domicilio);
+        
+        obj.setPais(pais);
+        obj.setTitularRes(titularRes);
+        obj.setCanalVenta(canalVenta);
         repositoryService.persist(obj);
         return obj;
     }
