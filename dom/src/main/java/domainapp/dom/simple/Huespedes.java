@@ -19,6 +19,7 @@
 package domainapp.dom.simple;
 
 import java.util.List;
+
 import java.util.regex.Pattern;
 
 import org.apache.isis.applib.Identifier;
@@ -49,7 +50,9 @@ import domainapp.dom.simple.Huesped.E_titular;
         menuOrder = "10"
 )
 public class Huespedes {
+	
 
+	
     //region > title
     public TranslatableString title() {
         return TranslatableString.tr("Húespedes");
@@ -66,8 +69,14 @@ public class Huespedes {
     @MemberOrder(sequence = "1")
     public List<Huesped> listAll() {
         return repositoryService.allInstances(Huesped.class);
+        
     }
+    
+    
+
     //endregion
+    
+
 
     //region > findByName (action)
     @Action(
@@ -87,8 +96,13 @@ public class Huespedes {
                         "findByName",
                         "name", name));
     }
-    //endregion
 
+    
+    //endregion
+    
+
+    
+    
     //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Huespedes> {
         public CreateDomainEvent(final Huespedes source, final Identifier identifier, final Object... arguments) {
@@ -128,7 +142,9 @@ public class Huespedes {
     }
 
     //endregion
-
+    
+    
+    
     //region > injected services
 
     @javax.inject.Inject

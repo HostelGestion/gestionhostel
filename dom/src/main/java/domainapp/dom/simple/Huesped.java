@@ -53,7 +53,11 @@ import org.apache.isis.applib.util.ObjectContracts;
                 value = "SELECT "
                         + "FROM domainapp.dom.simple.Huesped "
                         + "WHERE name.indexOf(:name) >= 0 ")
-})
+        }
+		
+)
+
+
 @javax.jdo.annotations.Unique(name="Huesped_name_UNQ", members = {"name"})
 @DomainObject
 public class Huesped implements Comparable<Huesped> {
@@ -166,6 +170,8 @@ public class Huesped implements Comparable<Huesped> {
     public int compareTo(final Huesped other) {
         return ObjectContracts.compare(this, other, "name");
     }
+    
+
     
     public enum E_titular{
     	TITULAR, NOTITULAR;
