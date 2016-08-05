@@ -143,7 +143,22 @@ public class Huespedes {
 
     //endregion
     
+    //region > listar titulares (action)
     
+    @MemberOrder(sequence = "4")
+    
+    final String titularRes = "TITULAR";
+    @ActionLayout(named="Listar titulares")
+    public List<Huesped> listAllTR()
+    			{
+    	
+    			return repositoryService.allMatches(
+    			new QueryDefault<>(
+    			 Huesped.class,
+    			"findByTitular",
+    			"titularRes", titularRes));
+    			}
+    //endregion
     
     //region > injected services
 

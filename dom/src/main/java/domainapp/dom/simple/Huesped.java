@@ -52,7 +52,13 @@ import org.apache.isis.applib.util.ObjectContracts;
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
                         + "FROM domainapp.dom.simple.Huesped "
-                        + "WHERE name.indexOf(:name) >= 0 ")
+                        + "WHERE name.indexOf(:name) >= 0 "),
+        @javax.jdo.annotations.Query(
+            	
+                name = "findByTitular", language = "JDOQL",
+                value = "SELECT "
+                        + "FROM domainapp.dom.simple.Huesped "
+                        + "WHERE titularRes.toString(:titularRes) == 'TITULAR' ")
         }
 		
 )
