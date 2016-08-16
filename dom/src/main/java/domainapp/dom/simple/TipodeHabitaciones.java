@@ -52,7 +52,7 @@ public class TipodeHabitaciones {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Simple Objects");
+        return TranslatableString.tr("Tipo de Habitación");
     }
     //endregion
 

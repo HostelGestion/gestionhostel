@@ -64,7 +64,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+        return TranslatableString.tr("Tipo de habitación: {name}", "name", getName());
     }
 
 
