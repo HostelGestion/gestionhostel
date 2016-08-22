@@ -74,7 +74,7 @@ public class Reserva implements Comparable<Reserva> {
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+        return TranslatableString.tr("Reserva: {name}", "name", getName());
     }
 
 
@@ -94,17 +94,7 @@ public class Reserva implements Comparable<Reserva> {
         this.name = name;
     }
 
-    private Huesped huesped;
-	@javax.jdo.annotations.Column(allowsNull="false")
-    //@MemberOrder(sequence="5")
-	public Huesped getHuesped() {
-		return huesped;
-	}
-	
-	
-	public void setHuesped(Huesped huesped) {
-		this.huesped = huesped;
-	}
+
     
     private String email;
     @javax.jdo.annotations.Column(allowsNull="true")

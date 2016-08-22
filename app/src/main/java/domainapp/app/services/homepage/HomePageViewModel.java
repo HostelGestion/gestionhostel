@@ -22,6 +22,10 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.ViewModel;
 
+import domainapp.dom.simple.Huesped;
+import domainapp.dom.simple.Huespedes;
+import domainapp.dom.simple.Reserva;
+import domainapp.dom.simple.Reservas;
 import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.simple.SimpleObjects;
 
@@ -30,21 +34,21 @@ public class HomePageViewModel {
 
     //region > title
     public String title() {
-        return getObjects().size() + " objects";
+        return getReservas().size() + " reservas";
     }
     //endregion
 
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
-    public List<SimpleObject> getObjects() {
-        return simpleObjects.listAll();
+    public List<Reserva> getReservas() {
+        return reservas.listAll();
     }
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
-    SimpleObjects simpleObjects;
+    Reservas reservas;
 
     //endregion
 }
