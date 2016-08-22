@@ -18,6 +18,7 @@
  */
 package domainapp.dom.simple;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,7 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.assertj.core.util.Lists;
 import org.joda.time.LocalDate;
 
 @DomainService(
@@ -74,31 +76,18 @@ public class Reservas {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
+    public List<Reserva> findByName(
             @ParameterLayout(named="Name")
             final String name
     ) {
         return repositoryService.allMatches(
                 new QueryDefault<>(
-                        SimpleObject.class,
+                        Reserva.class,
                         "findByName",
                         "name", name));
     }
     
-    //region > findByEmail (action)
 
-    @MemberOrder(sequence = "4")
-    public List<Huesped> findByEmail(
-            @ParameterLayout(named="Email")
-            final String email
-    ) {
-        return repositoryService.allMatches(
-                new QueryDefault<>(
-                        Huesped.class,
-                        "findByEmail",
-                        "email", email));
-    }
-    //endregion
     
   //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Reservas> {
@@ -106,11 +95,13 @@ public class Reservas {
             super(source, identifier, arguments);
         }
     }
-
+    
+    
     @Action(
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
+
     public Reserva create(
     		
             final @ParameterLayout(named="Nombre")String name, 
@@ -121,6 +112,7 @@ public class Reservas {
                     regexPatternReplacement = "Ingrese una dirección de correo electrónico válida (contienen un símbolo '@') -"   
                 )
     		@ParameterLayout(named="Email") String email,
+    		
     		@ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Húespedes?") int numHues)
@@ -138,6 +130,7 @@ public class Reservas {
     }
 	
     //endregion
+
 
     //region > injected services
 
