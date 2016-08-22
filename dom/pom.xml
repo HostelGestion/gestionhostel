@@ -69,7 +69,12 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
-
+		
+		<dependency>
+   			 <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
+   			 <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
+ 			   <version>1.13.0</version>
+		</dependency>
     </dependencies>
 
     <profiles>
