@@ -38,6 +38,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.assertj.core.util.Lists;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.LocalDate;
 
 @DomainService(
@@ -67,7 +68,14 @@ public class Reservas {
         return repositoryService.allInstances(Reserva.class);
     }
     //endregion
-
+    //calendar 
+    public interface CalendarEventable {
+        String getCalendarName();
+        CalendarEvent toCalendarEvent();
+    } 
+    
+    //fin calendar
+    
     //region > findByName (action)
     @Action(
             semantics = SemanticsOf.SAFE
@@ -115,7 +123,10 @@ public class Reservas {
     		
     		@ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
-    		@ParameterLayout(named="Húespedes?") int numHues)
+    		@ParameterLayout(named="Húespedes?") int numHues,
+    		@ParameterLayout(named="Id Huesped") int huesped_id_OID,
+			@ParameterLayout(named="Habitación") String habitacion) 
+
     	
     
     {
@@ -123,20 +134,27 @@ public class Reservas {
         obj.setName(name);
         obj.setEmail(email);
         obj.setFechaIn(fechaIn);
-        obj.setFechaIn(fechaSal);
+        obj.setFechaSal(fechaSal);
         obj.setNumHues(numHues);
+        obj.setHuesped_id_OID(huesped_id_OID);
+        obj.setHabitacion(habitacion);
+        
+        
+        
         repositoryService.persist(obj);
         return obj;
     }
 	
     //endregion
-
+    
 
     //region > injected services
 
     @javax.inject.Inject
     RepositoryService repositoryService;
-
+    
+    
+    
     //endregion
 }
 
