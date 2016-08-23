@@ -18,6 +18,7 @@
  */
 package domainapp.dom.simple;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
@@ -30,11 +31,21 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.assertj.core.util.Lists;
 import org.datanucleus.store.types.wrappers.Collection;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.LocalDate;
 
+import com.google.inject.Inject;
+
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
+
+/**
+ * @author Matt
+ *
+ */
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
@@ -68,7 +79,7 @@ import org.joda.time.LocalDate;
 
 @javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
 @DomainObject
-public class Reserva implements Comparable<Reserva> {
+	public class Reserva implements Comparable<Reserva>, CalendarEventable {
 
     public static final int NAME_LENGTH = 40;
 
@@ -86,6 +97,7 @@ public class Reserva implements Comparable<Reserva> {
     @Property(
         domainEvent = NameDomainEvent.class
     )
+    
     private String name;
     public String getName() {
         return name;
@@ -106,17 +118,20 @@ public class Reserva implements Comparable<Reserva> {
         this.email = email;
     }
     
-    
+    @Column	(allowsNull = "false")
+    @Property()
     private LocalDate fechaIn;
-    @javax.jdo.annotations.Column(allowsNull="true")
+    @javax.jdo.annotations.Column(allowsNull="false")
     public LocalDate getFechaIn() {
         return fechaIn;
     }
-    @javax.jdo.annotations.Column(allowsNull="true")
+    @javax.jdo.annotations.Column(allowsNull="false")
     public void setFechaIn(final LocalDate fechaIn) {
         this.fechaIn = fechaIn;
     }
     
+    @Column	(allowsNull = "false")
+    @Property()
     private LocalDate fechaSal;
     @javax.jdo.annotations.Column(allowsNull="true")
     public LocalDate getFechaSal() {
@@ -125,6 +140,28 @@ public class Reserva implements Comparable<Reserva> {
     @javax.jdo.annotations.Column(allowsNull="true")
     public void setFechaSal(final LocalDate fechaSal) {
         this.fechaSal = fechaSal;
+    }
+    
+
+    
+    private int numHues;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public int getNumHues() {
+        return numHues;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setNumHues(final int numHues) {
+        this.numHues = numHues;
+    }
+
+    private int huesped_id_OID;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public int getHuesped_id_OID() {
+        return huesped_id_OID;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setHuesped_id_OID(final int huesped_id_OID) {
+        this.huesped_id_OID = huesped_id_OID;
     }
     
     private String habitacion;
@@ -136,20 +173,11 @@ public class Reserva implements Comparable<Reserva> {
     public void setHabitacion(final String habitacion) {
         this.habitacion = habitacion;
     }
-    
-    private int numHues;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public int getNumHues() {
-        return numHues;
-    }
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setNumHues(final int numHues) {
-        this.numHues = numHues;
-    }
-    
 
     
 
+    
+    
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
@@ -167,8 +195,28 @@ public class Reserva implements Comparable<Reserva> {
     
 
 
+    public interface CalendarEventable {
+        String getCalendarName();
+        CalendarEvent toCalendarEvent();
+    } 
+    
 
 
+	@Override
+	public String getCalendarName() {
+		// TODO Auto-generated method stub
+		return "notYet";
+	}
+	@Override
+	public CalendarEvent toCalendarEvent() {
+		// TODO Auto-generated method stub
+		//return getFechaIn() !=  null? new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this)): null;
+		return getFechaIn() != null? new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this)):null;
+		
+	}
+
+	@Inject
+	TitleService titleService;
 
 
     @Override
@@ -179,5 +227,9 @@ public class Reserva implements Comparable<Reserva> {
 
     @javax.inject.Inject
     RepositoryService repositoryService;
+    
+    
+    	
+	
 
 }
