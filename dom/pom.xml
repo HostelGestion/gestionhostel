@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>gestionhostel-dom</artifactId>
-    <name>Hostel</name>
+    <name>Simple App DOM</name>
 
     <build>
         <resources>
@@ -70,20 +70,11 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
-<<<<<<< HEAD
 		<dependency>
     <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
     <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
     <version>1.13.0</version>
 </dependency>
-=======
-		
-		<dependency>
-   			 <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
-   			 <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
- 			   <version>1.13.0</version>
-		</dependency>
->>>>>>> origin/master
     </dependencies>
 
     <profiles>
