@@ -22,12 +22,14 @@ import java.util.List;
 
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.simple.Huesped;
-import domainapp.dom.simple.Huespedes;
-import domainapp.dom.simple.Reserva;
-import domainapp.dom.simple.Reservas;
+import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
+import domainapp.dom.reserva.Reserva;
+import domainapp.dom.reserva.Reservas;
 import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.simple.SimpleObjects;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
+import domainapp.dom.tipodehabitacion.TipodeHabitaciones;
 
 @ViewModel
 public class HomePageViewModel {
