@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.huesped;
 
 import java.util.List;
 
@@ -39,8 +39,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import domainapp.dom.simple.Huesped.E_canalVenta;
-import domainapp.dom.simple.Huesped.E_titular;
+import domainapp.dom.huesped.Huesped.E_canalVenta;
+import domainapp.dom.huesped.Huesped.E_titular;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -126,7 +126,7 @@ public class Huespedes {
     		@ParameterLayout(named="Email") String email,
     		@ParameterLayout(named="Domicilio")String domicilio,
     		@ParameterLayout(named="País")ListaPais pais,
-    		@ParameterLayout(named="Titular reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
+    		@ParameterLayout(named="Titular domainapp.dom.reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) E_canalVenta canalVenta) {
         final Huesped obj = repositoryService.instantiate(Huesped.class);
         obj.setName(name);
