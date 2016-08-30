@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.tipodehabitacion;
 
 import java.util.List;
 
@@ -38,9 +38,9 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 
-import domainapp.dom.simple.TipodeHabitacion.Ecama;
-import domainapp.dom.simple.TipodeHabitacion.Etipodeprecio; 
+/*import domainapp.dom.simple.TipodeHabitacion.Etipodeprecio; 
 import domainapp.dom.simple.TipodeHabitacion.Etipodesexo; 
+*/
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = TipodeHabitacion.class

@@ -16,15 +16,18 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.tipodehabitacion;
 
+import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -32,6 +35,7 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
+
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
@@ -49,11 +53,11 @@ import org.apache.isis.applib.util.ObjectContracts;
         @javax.jdo.annotations.Query(
                 name = "find", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.TipodeHabitacion"),
+                        + "FROM dom.tipodehabitacion.TipodeHabitacion"),
         @javax.jdo.annotations.Query(
                 name = "findByName", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.simple.TipodeHabitacion "
+                        + "FROM dom.tipodehabitacion.TipodeHabitacion "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
 @javax.jdo.annotations.Unique(name="TipodeHabitacion_name_UNQ", members = {"name"})
@@ -129,7 +133,20 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
 
+/*    private Habitacion habitacion;
 
+	//@Disabled
+	//@Named("Tecnico Asignado")
+	@MemberOrder(sequence = "4")
+	@Column(allowsNull = "True")
+	public Habitacion getHabitacion() {
+		return habitacion;
+	}
+
+	public void setHabitacion(final Habitacion habitacion) {
+		this.habitacion = habitacion;
+	}
+*/
 
     public static class DeleteDomainEvent extends ActionDomainEvent<TipodeHabitacion> {}
     @Action(
