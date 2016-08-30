@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.reserva;
 
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;

@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.simple;
+package domainapp.dom.reserva;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +40,8 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.assertj.core.util.Lists;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.LocalDate;
+
+import domainapp.dom.simple.SimpleObject;
 
 @DomainService(
         nature = NatureOfService.VIEW,
