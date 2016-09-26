@@ -59,6 +59,12 @@
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-runtime</artifactId>
         </dependency>
+        
+        <dependency>
+            <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
+            <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
+			<version>1.12.0</version>
+        </dependency>
 
     </dependencies>
 

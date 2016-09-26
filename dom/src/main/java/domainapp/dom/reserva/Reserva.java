@@ -18,6 +18,8 @@
  */
 package domainapp.dom.reserva;
 
+import java.io.Serializable;
+
 import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -35,11 +37,12 @@ import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.assertj.core.util.Lists;
 import org.datanucleus.store.types.wrappers.Collection;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+//import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
-
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
 /**
@@ -79,7 +82,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 @javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
 @DomainObject
-	public class Reserva implements Comparable<Reserva>, CalendarEventable {
+	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
 
     public static final int NAME_LENGTH = 40;
 
@@ -154,15 +157,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         this.numHues = numHues;
     }
 
-    private int huesped_id_OID;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public int getHuesped_id_OID() {
-        return huesped_id_OID;
-    }
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setHuesped_id_OID(final int huesped_id_OID) {
-        this.huesped_id_OID = huesped_id_OID;
-    }
+
     
     private String habitacion;
     @javax.jdo.annotations.Column(allowsNull="true")
@@ -173,6 +168,28 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public void setHabitacion(final String habitacion) {
         this.habitacion = habitacion;
     }
+    
+    
+
+    @Programmatic
+    @Override
+	public String getCalendarName() {
+		
+		return "Reservas";
+	}
+    
+
+
+	@Programmatic
+	@Override
+	public CalendarEvent toCalendarEvent() {
+		
+		//if (getFechaIn() == getFechaSal())
+		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getName());
+		/*else
+		for (getFechaIn(); ; getFechaIn().plusDays(1))
+		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getName());	*/
+	}
 
     
 
@@ -194,26 +211,6 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     }
     
 
-
-    public interface CalendarEventable {
-        String getCalendarName();
-        CalendarEvent toCalendarEvent();
-    } 
-    
-
-
-	@Override
-	public String getCalendarName() {
-		// TODO Auto-generated method stub
-		return "notYet";
-	}
-	@Override
-	public CalendarEvent toCalendarEvent() {
-		// TODO Auto-generated method stub
-		//return getFechaIn() !=  null? new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this)): null;
-		return getFechaIn() != null? new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), titleService.titleOf(this)):null;
-		
-	}
 
 	@Inject
 	TitleService titleService;

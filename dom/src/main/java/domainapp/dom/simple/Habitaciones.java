@@ -20,6 +20,8 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
+
 
 @DomainService(
         nature = NatureOfService.VIEW,

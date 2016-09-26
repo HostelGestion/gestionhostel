@@ -37,6 +37,10 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.tipodehabitacion.TipodeHabitacion.Ecama;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodeprecio;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodesexo;
+
 
 /*import domainapp.dom.simple.TipodeHabitacion.Etipodeprecio; 
 import domainapp.dom.simple.TipodeHabitacion.Etipodesexo; 
