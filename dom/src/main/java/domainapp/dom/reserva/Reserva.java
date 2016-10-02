@@ -65,17 +65,17 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @javax.jdo.annotations.Query(
             name = "find", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.simple.Reserva "),
+                    + "FROM domainapp.dom.reserva.Reserva "),
     @javax.jdo.annotations.Query(
             name = "findByName", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.simple.Reserva "
+                    + "FROM domainapp.dom.reserva.Reserva "
                     + "WHERE name.indexOf(:name) >= 0 "),
     		@javax.jdo.annotations.Query(
         	
             name = "findByEmail", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.simple.Huesped "
+                    + "FROM domainapp.dom.reserva.Huesped "
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
@@ -175,8 +175,17 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Override
 	public String getCalendarName() {
 		
-		return "Reservas";
+		return getName();
 	}
+    
+    @Programmatic
+    public String getNotes() {
+    	//String not[] = new String[2];
+        //not[0]= getNumHues();
+        //not[1] = getHabitacion();
+        return getNumHues() + " cama/s, " + getName();
+    	
+    }
     
 
 
@@ -185,7 +194,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 	public CalendarEvent toCalendarEvent() {
 		
 		//if (getFechaIn() == getFechaSal())
-		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getName());
+		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
 		/*else
 		for (getFechaIn(); ; getFechaIn().plusDays(1))
 		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getName());	*/
