@@ -1,5 +1,5 @@
 
-package domainapp.dom.simple;
+package domainapp.dom.habitacion;
 
 import java.util.List;
 
