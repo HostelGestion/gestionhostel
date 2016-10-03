@@ -39,7 +39,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
-import domainapp.dom.huesped.Huesped.E_canalVenta;
+
 import domainapp.dom.huesped.Huesped.E_titular;
 
 @DomainService(
@@ -125,9 +125,9 @@ public class Huespedes {
                 )
     		@ParameterLayout(named="Email") String email,
     		@ParameterLayout(named="Domicilio")String domicilio,
-    		@ParameterLayout(named="País")ListaPais pais,
-    		@ParameterLayout(named="Titular domainapp.dom.reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
-    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) E_canalVenta canalVenta) {
+    		@ParameterLayout(named="País")ListaPais pais
+    		//@ParameterLayout(named="Titular domainapp.dom.reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
+    		) {
         final Huesped obj = repositoryService.instantiate(Huesped.class);
         obj.setName(name);
         obj.setNumTel(numTel);
@@ -135,8 +135,8 @@ public class Huespedes {
         obj.setDomicilio(domicilio);
         
         obj.setPais(pais);
-        obj.setTitularRes(titularRes);
-        obj.setCanalVenta(canalVenta);
+        //obj.setTitularRes(titularRes);
+        
         repositoryService.persist(obj);
         return obj;
     }

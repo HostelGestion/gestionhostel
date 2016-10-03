@@ -42,6 +42,9 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
+
+//import domainapp.dom.huesped.Huesped.E_canalVenta;
+
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
@@ -170,6 +173,16 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     }
     
     
+    private E_canalVenta canalVenta;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public E_canalVenta getCanalVenta() {
+    	return canalVenta; 
+    }
+    public void setCanalVenta(E_canalVenta canalVenta) {
+    	this.canalVenta = canalVenta;
+    }
+    
+    
 
     @Programmatic
     @Override
@@ -228,6 +241,10 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Override
     public int compareTo(final Reserva other) {
         return ObjectContracts.compare(this, other, "name");
+    }
+    
+    public enum E_canalVenta{
+    	Booking, Despegar;
     }
 
 

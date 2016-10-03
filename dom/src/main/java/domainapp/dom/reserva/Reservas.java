@@ -30,6 +30,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -41,7 +42,10 @@ import org.assertj.core.util.Lists;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.ReadableInstant;
 
+import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.simple.SimpleObject;
 
 @DomainService(
@@ -123,14 +127,15 @@ public class Reservas {
                     regexPatternReplacement = "Ingrese una dirección de correo electrónico válida (contienen un símbolo '@') -"   
                 )
     		@ParameterLayout(named="Email") String email,
-    		
+    		//@Parameter	
     		@ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
+    		
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Húespedes?") int numHues,
-    		@ParameterLayout(named="Habitación") String habitacion) 
+    		@ParameterLayout(named="Habitación") String habitacion,
+    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) domainapp.dom.reserva.Reserva.E_canalVenta canalVenta) 
 
-    	
-    
+        
     {
         final Reserva obj = repositoryService.instantiate(Reserva.class);
         obj.setName(name);
@@ -139,17 +144,14 @@ public class Reservas {
         obj.setFechaSal(fechaSal);
         obj.setNumHues(numHues);
         obj.setHabitacion(habitacion);
-        
+        obj.setCanalVenta(canalVenta);
         
         
         repositoryService.persist(obj);
         return obj;
     }
-	
-    //endregion
-    
 
-    //region > injected services
+
 
     @javax.inject.Inject
     RepositoryService repositoryService;

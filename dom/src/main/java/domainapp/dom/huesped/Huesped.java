@@ -147,15 +147,7 @@ public class Huesped implements Comparable<Huesped> {
     	this.titularRes = titularRes;
     }
     
-    private E_canalVenta canalVenta;
-    @javax.jdo.annotations.Column(allowsNull="false")
-    public E_canalVenta getCanalVenta() {
-    	return canalVenta; 
-    }
-    public void setCanalVenta(E_canalVenta canalVenta) {
-    	this.canalVenta = canalVenta;
-    }
-    
+
 
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("El signo de exclamación no está permitido"): null;
@@ -183,9 +175,7 @@ public class Huesped implements Comparable<Huesped> {
     	TITULAR, NOTITULAR;
     }
     
-    public enum E_canalVenta{
-    	Booking, Despegar;
-    }
+
 
     @javax.inject.Inject
     RepositoryService repositoryService;
