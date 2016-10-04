@@ -25,6 +25,7 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
@@ -43,6 +44,8 @@ import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
+import domainapp.dom.huesped.Huesped;
+
 //import domainapp.dom.huesped.Huesped.E_canalVenta;
 
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
@@ -52,6 +55,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
  * @author Matt
  *
  */
+@SuppressWarnings("deprecation")
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
@@ -82,9 +86,8 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
-
 @javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
-@DomainObject
+@DomainObject 
 	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
 
     public static final int NAME_LENGTH = 40;
@@ -188,15 +191,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Override
 	public String getCalendarName() {
 		
-		return getName();
+		return getHabitacion();
 	}
     
     @Programmatic
     public String getNotes() {
-    	//String not[] = new String[2];
-        //not[0]= getNumHues();
-        //not[1] = getHabitacion();
-        return getNumHues() + " cama/s, " + getName();
+    	
+    	 return getNumHues() + " cama/s, " + getName() + " @ dormi " + getHabitacion();
     	
     }
     

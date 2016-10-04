@@ -43,7 +43,7 @@ public class HomePageViewModel {
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
     public List<Reserva> getReservas() {
-        return reservas.listAll();
+        return reservas.listarReservas();
     }
     //endregion
 

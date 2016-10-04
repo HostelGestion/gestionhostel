@@ -38,6 +38,7 @@
                                 <c:property id="fechaSal" namedEscaped="true"/>
                                 <c:property id="numHues" namedEscaped="true"/>
                                 <c:property id="habitacion" namedEscaped="true"/>
+                                <c:property id="canalVenta" namedEscaped="true"/>
                             </c:fieldSet>
                         </bs3:col>
                     </bs3:row>

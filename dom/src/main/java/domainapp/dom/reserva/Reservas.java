@@ -34,6 +34,7 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
@@ -71,17 +72,9 @@ public class Reservas {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Reserva> listAll() {
+    public List<Reserva> listarReservas() {
         return repositoryService.allInstances(Reserva.class);
     }
-    //endregion
-    //calendar 
-/*    public interface CalendarEventable {
-        String getCalendarName();
-        CalendarEvent toCalendarEvent();
-    } */
-    
-    //fin calendar
     
     //region > findByName (action)
     @Action(
@@ -91,7 +84,7 @@ public class Reservas {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<Reserva> findByName(
+    public List<Reserva> buscarPorNombre(
             @ParameterLayout(named="Name")
             final String name
     ) {
@@ -117,19 +110,18 @@ public class Reservas {
     )
     @MemberOrder(sequence = "3")
 
-    public Reserva create(
+    public Reserva crearReserva(
     		
-            final @ParameterLayout(named="Nombre")String name, 
-            //@ParameterLayout(named="Teléfono")String numTel,
+            final
             @Parameter(
                     regexPattern = "(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+",
                     regexPatternFlags = Pattern.CASE_INSENSITIVE,
-                    regexPatternReplacement = "Ingrese una dirección de correo electrónico válida (contienen un símbolo '@') -"   
+                    regexPatternReplacement = "Ingrese una dirección de correo electrónico válida."   
                 )
     		@ParameterLayout(named="Email") String email,
-    		//@Parameter	
-    		@ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
-    		
+            @ParameterLayout(named="Nombre")String name, 
+            //@ParameterLayout(named="Teléfono")String numTel,
+            @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Húespedes?") int numHues,
     		@ParameterLayout(named="Habitación") String habitacion,
