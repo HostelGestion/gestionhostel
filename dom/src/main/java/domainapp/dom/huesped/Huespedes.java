@@ -126,16 +126,14 @@ public class Huespedes {
     		@ParameterLayout(named="Email") String email,
     		@ParameterLayout(named="Domicilio")String domicilio,
     		@ParameterLayout(named="País")ListaPais pais
-    		//@ParameterLayout(named="Titular domainapp.dom.reserva?")@Parameter(optionality = Optionality.MANDATORY) E_titular titularRes,
     		) {
         final Huesped obj = repositoryService.instantiate(Huesped.class);
         obj.setName(name);
-        obj.setNumTel(numTel);
+        //obj.setNumTel(numTel);
         obj.setEmail(email);
         obj.setDomicilio(domicilio);
         
         obj.setPais(pais);
-        //obj.setTitularRes(titularRes);
         
         repositoryService.persist(obj);
         return obj;
@@ -143,7 +141,7 @@ public class Huespedes {
 
     //endregion
     
-    //region > listar titulares (action)
+    /*//region > listar titulares (action)
     
     @MemberOrder(sequence = "4")
     
@@ -159,7 +157,7 @@ public class Huespedes {
     			"titularRes", titularRes));
     			}
     //endregion
-    
+*/    
     //region > injected services
 
     @javax.inject.Inject

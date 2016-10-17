@@ -29,10 +29,12 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
@@ -96,7 +98,6 @@ public class Reservas {
     }
     
 
-    
   //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Reservas> {
         public CreateDomainEvent(final Reservas source, final Identifier identifier, final Object... arguments) {
@@ -130,8 +131,8 @@ public class Reservas {
         
     {
         final Reserva obj = repositoryService.instantiate(Reserva.class);
-        obj.setName(name);
         obj.setEmail(email);
+        obj.setName(name);
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
         obj.setNumHues(numHues);
@@ -143,8 +144,27 @@ public class Reservas {
         return obj;
     }
 
+    //region > findByEmail (action)
+    
+    @MemberOrder(sequence = "7")
+    @Programmatic
+    public List<Huesped> autoCompletePorEmail(
+            @ParameterLayout(named="Email")
+            final String email
+    ) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Huesped.class,
+                        "findByEmail",
+                        "email", email));
+    }
 
+    
+    //endregion
+    
 
+    
+    
     @javax.inject.Inject
     RepositoryService repositoryService;
     

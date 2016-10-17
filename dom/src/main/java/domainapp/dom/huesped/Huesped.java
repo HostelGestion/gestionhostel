@@ -22,7 +22,9 @@ import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.ObjectType;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -32,12 +34,15 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.reserva.Reserva;
+import domainapp.dom.reserva.Reservas;
 
+@SuppressWarnings("deprecation")
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
         table = "Huesped"
 )
+
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
@@ -68,6 +73,7 @@ import domainapp.dom.reserva.Reserva;
 
 @javax.jdo.annotations.Unique(name="Huesped_name_UNQ", members = {"name"})
 @DomainObject
+//@DomainObject(autoCompleteRepository = Reservas.class)
 public class Huesped implements Comparable<Huesped> {
 
     public static final int NAME_LENGTH = 40;
@@ -154,6 +160,10 @@ public class Huesped implements Comparable<Huesped> {
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("El signo de exclamación no está permitido"): null;
     }
+    
+    
+   
+    
 
     public static class DeleteDomainEvent extends ActionDomainEvent<Huesped> {}
     @Action(

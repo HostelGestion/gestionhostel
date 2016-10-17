@@ -38,13 +38,13 @@ import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.assertj.core.util.Lists;
 import org.datanucleus.store.types.wrappers.Collection;
-//import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
 import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
 
 //import domainapp.dom.huesped.Huesped.E_canalVenta;
 
@@ -82,12 +82,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         	
             name = "findByEmail", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.reserva.Huesped "
+                    + "FROM domainapp.dom.huesped.Huesped "
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
 @javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
-@DomainObject 
+//@DomainObject
+@DomainObject(autoCompleteRepository = Reservas.class, autoCompleteAction = "autoCompletarPorEmail")
 	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
 
     public static final int NAME_LENGTH = 40;
@@ -201,29 +202,26 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     	
     }
     
-
-
-	@Programmatic
+    @Programmatic
 	@Override
 	public CalendarEvent toCalendarEvent() {
 		
-		//if (getFechaIn() == getFechaSal())
 		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		/*else
-		for (getFechaIn(); ; getFechaIn().plusDays(1))
-		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getName());	*/
+		
 	}
-
-    
-
     
     
+    public CalendarEvent toCalendarEventSal() {
+		
+		return new CalendarEvent(getFechaSal().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
+		
+	}
+    	
+      
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
-
-
-
+    
     public static class DeleteDomainEvent extends ActionDomainEvent<Reserva> {}
     @Action(
             domainEvent = DeleteDomainEvent.class,
