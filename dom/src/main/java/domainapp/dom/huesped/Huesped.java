@@ -60,12 +60,13 @@ import domainapp.dom.reserva.Reservas;
                 value = "SELECT "
                         + "FROM domainapp.dom.huesped.Huesped "
                         + "WHERE name.indexOf(:name) >= 0 "),
+        
         @javax.jdo.annotations.Query(
-            	
-                name = "findByTitular", language = "JDOQL",
+                name = "findByEmail", language = "JDOQL",
                 value = "SELECT "
-                        + "FROM domainapp.dom.huesped.Huesped "
-                        + "WHERE titularRes.toString(:titularRes) == 'TITULAR' ")
+                        //+ "FROM domainapp.dom.simple.Huesped  "
+                        + "FROM domainapp.dom.huesped.Huesped  "
+                        + "WHERE email.indexOf(:email) >= 0 ")
         }
 		
 )

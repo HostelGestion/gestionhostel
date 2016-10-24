@@ -100,7 +100,16 @@ public class Huespedes {
     
     //endregion
     
-
+    public List<Huesped> findByEmail(
+            @ParameterLayout(named="Email")
+            final String email
+    ) {
+        return repositoryService.allMatches(
+                new QueryDefault<>(
+                        Huesped.class,
+                        "findByEmail",
+                        "email", email));
+    }
     
     
     //region > create (action)
@@ -124,15 +133,13 @@ public class Huespedes {
                     regexPatternReplacement = "Ingrese una dirección de correo electrónico válida (contienen un símbolo '@') -"   
                 )
     		@ParameterLayout(named="Email") String email,
-    		@ParameterLayout(named="Domicilio")String domicilio,
+
     		@ParameterLayout(named="País")ListaPais pais
     		) {
         final Huesped obj = repositoryService.instantiate(Huesped.class);
         obj.setName(name);
-        //obj.setNumTel(numTel);
+        obj.setNumTel(numTel);
         obj.setEmail(email);
-        obj.setDomicilio(domicilio);
-        
         obj.setPais(pais);
         
         repositoryService.persist(obj);
@@ -141,23 +148,7 @@ public class Huespedes {
 
     //endregion
     
-    /*//region > listar titulares (action)
     
-    @MemberOrder(sequence = "4")
-    
-    final String titularRes = "TITULAR";
-    @ActionLayout(named="Listar titulares")
-    public List<Huesped> listAllTR()
-    			{
-    	
-    			return repositoryService.allMatches(
-    			new QueryDefault<>(
-    			 Huesped.class,
-    			"findByTitular",
-    			"titularRes", titularRes));
-    			}
-    //endregion
-*/    
     //region > injected services
 
     @javax.inject.Inject

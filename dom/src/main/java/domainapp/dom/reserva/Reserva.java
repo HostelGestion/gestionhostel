@@ -52,7 +52,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
 /**
- * @author Matt
+ * @author Matías
  *
  */
 @SuppressWarnings("deprecation")
@@ -86,7 +86,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
-@javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
 //@DomainObject
 @DomainObject(autoCompleteRepository = Reservas.class, autoCompleteAction = "autoCompletarPorEmail")
 	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
@@ -95,7 +95,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Reserva: {name}", "name", getName());
+        return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
     }
 
 
@@ -108,13 +108,28 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         domainEvent = NameDomainEvent.class
     )
     
+    private Huesped huesped;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public Huesped getHuesped() {
+        return huesped;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setHuesped(final Huesped huesped) {
+        this.huesped = huesped;
+    }
+    
+    /*
     private String name;
+    @javax.jdo.annotations.Column(allowsNull="true")
     public String getName() {
         return name;
     }
+    
+    @javax.jdo.annotations.Column(allowsNull="true")
     public void setName(final String name) {
         this.name = name;
     }
+
 
 
     
@@ -127,6 +142,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public void setEmail(final String email) {
         this.email = email;
     }
+    */
     
     @Column	(allowsNull = "false")
     @Property()
@@ -198,7 +214,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Programmatic
     public String getNotes() {
     	
-    	 return getNumHues() + " cama/s, " + getName() + " @ dormi " + getHabitacion();
+    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion();
     	
     }
     
@@ -211,16 +227,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 	}
     
     
-    public CalendarEvent toCalendarEventSal() {
-		
-		return new CalendarEvent(getFechaSal().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		
-	}
+    
     	
-      
+    /*
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
+	*/
     
     public static class DeleteDomainEvent extends ActionDomainEvent<Reserva> {}
     @Action(
