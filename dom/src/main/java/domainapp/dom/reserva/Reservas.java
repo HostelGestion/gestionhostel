@@ -47,9 +47,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 
+import domainapp.dom.habitacion.Habitacion;
+import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.simple.SimpleObject;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -115,20 +118,16 @@ public class Reservas {
     		
             final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
-            
-            
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Húespedes?") int numHues,
-    		@ParameterLayout(named="Habitación") String habitacion,
+    		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) domainapp.dom.reserva.Reserva.E_canalVenta canalVenta) 
 
         
     {
         final Reserva obj = repositoryService.instantiate(Reserva.class);
         obj.setHuesped(huesped);
-        /*obj.setEmail(email);
-        obj.setName(name);*/
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
         obj.setNumHues(numHues);
@@ -144,13 +143,25 @@ public class Reservas {
         return huespedes.findByEmail(email);
     }
 
+    //@Programmatic
+
     
+     public List<Habitacion> choices4CrearReserva() {
+     
+        return habitaciones.listAll();
+   	}
     
+
     @javax.inject.Inject
     RepositoryService repositoryService;
     
     @javax.inject.Inject
     private Huespedes huespedes;
+    
+    @javax.inject.Inject
+    private Habitaciones habitaciones;
+    
+
     
     //endregion
 }

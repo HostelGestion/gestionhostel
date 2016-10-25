@@ -43,6 +43,7 @@ import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
+import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 
@@ -118,31 +119,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         this.huesped = huesped;
     }
     
-    /*
-    private String name;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public String getName() {
-        return name;
-    }
-    
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setName(final String name) {
-        this.name = name;
-    }
 
-
-
-    
-    private String email;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public String getEmail() {
-        return email;
-    }
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setEmail(final String email) {
-        this.email = email;
-    }
-    */
     
     @Column	(allowsNull = "false")
     @Property()
@@ -182,6 +159,18 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 
     
+    private Habitacion habitacion;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public Habitacion getHabitacion() {
+        return habitacion;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setHabitacion(final Habitacion habitacion) {
+        this.habitacion = habitacion;
+    }
+    
+    
+    /*
     private String habitacion;
     @javax.jdo.annotations.Column(allowsNull="true")
     public String getHabitacion() {
@@ -191,7 +180,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public void setHabitacion(final String habitacion) {
         this.habitacion = habitacion;
     }
-    
+    */
     
     private E_canalVenta canalVenta;
     @javax.jdo.annotations.Column(allowsNull="false")
@@ -208,13 +197,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Override
 	public String getCalendarName() {
 		
-		return getHabitacion();
+		return getHabitacion().getName();
 	}
     
     @Programmatic
     public String getNotes() {
     	
-    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion();
+    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
     	
     }
     
