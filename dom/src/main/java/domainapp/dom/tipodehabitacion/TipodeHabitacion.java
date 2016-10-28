@@ -60,7 +60,7 @@ import org.apache.isis.applib.util.ObjectContracts;
                         + "FROM dom.tipodehabitacion.TipodeHabitacion "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="TipodeHabitacion_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="TipodeHabitacion_descripcion_UNQ", members = {"descripcion"})
 @DomainObject
 public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
 
@@ -68,7 +68,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Tipo de habitación: {name}", "name", getName());
+        return TranslatableString.tr("Tipo de habitación: {descripcion}", "descripcion", getDescripcion());
     }
 
 
@@ -86,6 +86,15 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     }
     public void setName(final String name) {
         this.name = name;
+    }
+    
+    private Integer camas;
+	@javax.jdo.annotations.Column(allowsNull="false")
+    public Integer getCamas() {
+        return camas;
+    }
+    public void setCamas(final Integer camas) {
+        this.camas = camas;
     }
 
     private Ecama ccama;
@@ -126,27 +135,29 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     	return tsexo;
     }
     
+   
+    
     public void setTsexo (Etipodesexo tsexo)  {
     	this.tsexo = tsexo;
     }
+    
+    
+    private String descripcion;
+	@javax.jdo.annotations.Column(allowsNull="false")
+	public String getDescripcion() {
+        return descripcion;
+    }
+    public void setDescripcion(final String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
 
-/*    private Habitacion habitacion;
-
-	//@Disabled
-	//@Named("Tecnico Asignado")
-	@MemberOrder(sequence = "4")
-	@Column(allowsNull = "True")
-	public Habitacion getHabitacion() {
-		return habitacion;
-	}
-
-	public void setHabitacion(final Habitacion habitacion) {
-		this.habitacion = habitacion;
-	}
-*/
+    
+    
+    
 
     public static class DeleteDomainEvent extends ActionDomainEvent<TipodeHabitacion> {}
     @Action(

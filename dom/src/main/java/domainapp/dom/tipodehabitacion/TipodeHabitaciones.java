@@ -18,6 +18,8 @@
  */
 package domainapp.dom.tipodehabitacion;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.isis.applib.Identifier;
@@ -37,6 +39,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion.Ecama;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodeprecio;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodesexo;
@@ -92,7 +95,11 @@ public class TipodeHabitaciones {
                         "name", name));
     }
     //endregion
+    
+    
 
+    
+    
     //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<TipodeHabitaciones> {
         public CreateDomainEvent(final TipodeHabitaciones source, final Identifier identifier, final Object... arguments) {
@@ -104,22 +111,26 @@ public class TipodeHabitaciones {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public TipodeHabitacion create(
+    public TipodeHabitacion crearTipoDeHabitacion(
             final @ParameterLayout(named="Nombre") String name,
-           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Ecama ccama,
+           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Integer camas,
            final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Tipo de Precio") Etipodeprecio tprecio,
            final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Tipo de Sexo admitido en Habitaciones") Etipodesexo tsexo
            ) {
         final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
         obj.setName(name);
-        obj.setCama(ccama);
+        obj.setCamas(camas);
         obj.setTprecio(tprecio);
         obj.setTsexo(tsexo);
+        obj.setDescripcion(name + ", camas: " + camas.toString() + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
        
         repositoryService.persist(obj);
         return obj;
     }
-
+    
+    public Collection<Integer> choices1CrearTipoDeHabitacion() {
+        return Arrays.asList(2,5,10);
+    }
     //endregion
 
     //region > injected services

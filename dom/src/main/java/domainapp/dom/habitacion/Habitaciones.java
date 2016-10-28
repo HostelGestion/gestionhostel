@@ -1,6 +1,8 @@
 
 package domainapp.dom.habitacion;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import org.apache.isis.applib.Identifier;
@@ -10,17 +12,22 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
+import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion;
+import domainapp.dom.tipodehabitacion.TipodeHabitaciones;
 
 
 @DomainService(
@@ -46,8 +53,8 @@ public class Habitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Habitaciones> listAll() {
-        return repositoryService.allInstances(Habitaciones.class);
+    public List<Habitacion> listAll() {
+        return repositoryService.allInstances(Habitacion.class);
     }
     //endregion
 
@@ -82,22 +89,30 @@ public class Habitaciones {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "1")
-    public TipodeHabitacion create(
-            final @ParameterLayout(named="Nombre") String name
+    public Habitacion crearHabitacion(
+            final @ParameterLayout(named="Nombre") String name,
+            final @ParameterLayout(named="Tipo de Habitación")	 TipodeHabitacion tipodeHabitacion
            ) {
-        final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
+        final Habitacion obj = repositoryService.instantiate(Habitacion.class);
         obj.setName(name);
-        
+        obj.setTipodeHabitacion(tipodeHabitacion);
         repositoryService.persist(obj);
         return obj;
     }
-
+    
+    @Programmatic
+    public List<TipodeHabitacion> choices1CrearHabitacion() {
+        return tipodeHabitaciones.listAll();
+   	}
     //endregion
 
     //region > injected services
 
     @javax.inject.Inject
     RepositoryService repositoryService;
+    
+    @javax.inject.Inject
+    private TipodeHabitaciones tipodeHabitaciones;
 
     //endregion
 }
