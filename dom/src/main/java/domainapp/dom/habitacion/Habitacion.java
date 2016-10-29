@@ -32,6 +32,8 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
+
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE,
         schema = "simple",
@@ -81,6 +83,15 @@ public class Habitacion implements Comparable<Habitacion> {
     }
     public void setName(final String name) {
         this.name = name;
+    }
+    
+    private TipodeHabitacion tipodeHabitacion;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public TipodeHabitacion getTipodeHabitacion() {
+        return tipodeHabitacion;
+    }
+    public void setTipodeHabitacion(final TipodeHabitacion tipodeHabitacion) {
+        this.tipodeHabitacion = tipodeHabitacion;
     }
 
     public TranslatableString validateName(final String name) {
