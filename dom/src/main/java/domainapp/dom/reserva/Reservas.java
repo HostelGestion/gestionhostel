@@ -47,9 +47,12 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 
+import domainapp.dom.habitacion.Habitacion;
+import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.simple.SimpleObject;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -114,25 +117,17 @@ public class Reservas {
     public Reserva crearReserva(
     		
             final
-            @Parameter(
-                    regexPattern = "(\\w+\\.)*\\w+@(\\w+\\.)+[A-Za-z]+",
-                    regexPatternFlags = Pattern.CASE_INSENSITIVE,
-                    regexPatternReplacement = "Ingrese una dirección de correo electrónico válida."   
-                )
-    		@ParameterLayout(named="Email") String email,
-            @ParameterLayout(named="Nombre")String name, 
-            //@ParameterLayout(named="Teléfono")String numTel,
+            @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
     		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Húespedes?") int numHues,
-    		@ParameterLayout(named="Habitación") String habitacion,
+    		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) domainapp.dom.reserva.Reserva.E_canalVenta canalVenta) 
 
         
     {
         final Reserva obj = repositoryService.instantiate(Reserva.class);
-        obj.setEmail(email);
-        obj.setName(name);
+        obj.setHuesped(huesped);
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
         obj.setNumHues(numHues);
@@ -144,31 +139,29 @@ public class Reservas {
         return obj;
     }
 
-    //region > findByEmail (action)
-    
-    @MemberOrder(sequence = "7")
-    @Programmatic
-    public List<Huesped> autoCompletePorEmail(
-            @ParameterLayout(named="Email")
-            final String email
-    ) {
-        return repositoryService.allMatches(
-                new QueryDefault<>(
-                        Huesped.class,
-                        "findByEmail",
-                        "email", email));
+    public Collection<Huesped> autoComplete0CrearReserva(final @MinLength(2) String email) {
+        return huespedes.findByEmail(email);
     }
 
-    
-    //endregion
-    
+    //@Programmatic
 
     
+     public List<Habitacion> choices4CrearReserva() {
+     
+        return habitaciones.listAll();
+   	}
     
+
     @javax.inject.Inject
     RepositoryService repositoryService;
     
+    @javax.inject.Inject
+    private Huespedes huespedes;
     
+    @javax.inject.Inject
+    private Habitaciones habitaciones;
+    
+
     
     //endregion
 }

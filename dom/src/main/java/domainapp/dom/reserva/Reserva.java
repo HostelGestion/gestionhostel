@@ -43,6 +43,7 @@ import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
+import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 
@@ -52,7 +53,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
 /**
- * @author Matt
+ * @author Matías
  *
  */
 @SuppressWarnings("deprecation")
@@ -86,7 +87,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
-@javax.jdo.annotations.Unique(name="Reserva_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
 //@DomainObject
 @DomainObject(autoCompleteRepository = Reservas.class, autoCompleteAction = "autoCompletarPorEmail")
 	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
@@ -95,7 +96,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 
     public TranslatableString title() {
-        return TranslatableString.tr("Reserva: {name}", "name", getName());
+        return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
     }
 
 
@@ -108,25 +109,17 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         domainEvent = NameDomainEvent.class
     )
     
-    private String name;
-    public String getName() {
-        return name;
+    private Huesped huesped;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public Huesped getHuesped() {
+        return huesped;
     }
-    public void setName(final String name) {
-        this.name = name;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setHuesped(final Huesped huesped) {
+        this.huesped = huesped;
     }
-
-
     
-    private String email;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public String getEmail() {
-        return email;
-    }
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setEmail(final String email) {
-        this.email = email;
-    }
+
     
     @Column	(allowsNull = "false")
     @Property()
@@ -166,6 +159,18 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
 
     
+    private Habitacion habitacion;
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public Habitacion getHabitacion() {
+        return habitacion;
+    }
+    @javax.jdo.annotations.Column(allowsNull="true")
+    public void setHabitacion(final Habitacion habitacion) {
+        this.habitacion = habitacion;
+    }
+    
+    
+    /*
     private String habitacion;
     @javax.jdo.annotations.Column(allowsNull="true")
     public String getHabitacion() {
@@ -175,7 +180,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public void setHabitacion(final String habitacion) {
         this.habitacion = habitacion;
     }
-    
+    */
     
     private E_canalVenta canalVenta;
     @javax.jdo.annotations.Column(allowsNull="false")
@@ -192,13 +197,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Override
 	public String getCalendarName() {
 		
-		return getHabitacion();
+		return getHabitacion().getName();
 	}
     
     @Programmatic
     public String getNotes() {
     	
-    	 return getNumHues() + " cama/s, " + getName() + " @ dormi " + getHabitacion();
+    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
     	
     }
     
@@ -211,16 +216,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 	}
     
     
-    public CalendarEvent toCalendarEventSal() {
-		
-		return new CalendarEvent(getFechaSal().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		
-	}
+    
     	
-      
+    /*
     public TranslatableString validateName(final String name) {
         return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
     }
+	*/
     
     public static class DeleteDomainEvent extends ActionDomainEvent<Reserva> {}
     @Action(
