@@ -18,6 +18,7 @@
  */
 package domainapp.dom.reserva;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -47,12 +48,15 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 
+import domainapp.dom.configuracion.Configuracion;
+import domainapp.dom.configuracion.Configuraciones;
 import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion;
+import java.time.temporal.ChronoUnit;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -101,7 +105,7 @@ public class Reservas {
     }
     
 
-  //region > create (action)
+  //region > Crear Reserva (action)
     public static class CreateDomainEvent extends ActionDomainEvent<Reservas> {
         public CreateDomainEvent(final Reservas source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
@@ -118,11 +122,13 @@ public class Reservas {
     		
             final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
+            //@Parameter( mustSatisfy = validaFechas.FechaInEspecificaciones.class )
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
-    		@ParameterLayout(named="Fecha salida") LocalDate fechaSal,
-    		@ParameterLayout(named="Húespedes?") int numHues,
+            @ParameterLayout(named="Fecha llegada") LocalDate fechaSal,
+    		@ParameterLayout(named="Días de estadía") int diasEstadia,
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
-    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) domainapp.dom.reserva.Reserva.E_canalVenta canalVenta) 
+    		@ParameterLayout(named="Huéspedes?") int numHues,
+    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta)
 
         
     {
@@ -130,27 +136,58 @@ public class Reservas {
         obj.setHuesped(huesped);
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
-        obj.setNumHues(numHues);
+        obj.setDiasEstadia(diasEstadia);
         obj.setHabitacion(habitacion);
+        obj.setNumHues(numHues);
         obj.setCanalVenta(canalVenta);
         
         
-        repositoryService.persist(obj);
+        repositoryService.persist(obj);	
         return obj;
     }
-
+    
+    // Fin de Region Crear Reserva.
+    
+    
+    //diasEstadia = daysBetween(fechaIn, fechaSal);
+    
+    // Validación fecha de Reserva inicial
+    @Programmatic
+    public String validate1CrearReserva(final LocalDate fechaIn){
+    	
+    	
+    	LocalDate hoyy = LocalDate.now();
+    	if (fechaIn.isBefore(hoyy)) {
+			return "Una Reserva no puede empezar en el pasado";
+		}
+    	  	
+    	
+    	return null;
+    }
+    
+    //
+    
+ 
+    
+    // Autocompleta el Huésped a partir de su email:
     public Collection<Huesped> autoComplete0CrearReserva(final @MinLength(2) String email) {
         return huespedes.findByEmail(email);
     }
 
-    //@Programmatic
-
-    
-     public List<Habitacion> choices4CrearReserva() {
+    // Lista las habitaciones creadas en la clase correspondiente:    
+     public List<Habitacion> choices3CrearReserva() {
      
         return habitaciones.listAll();
-   	}
+   	}	
     
+     public Collection<Integer> choices4CrearReserva() {
+         return Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+     }
+     
+     public List<String> choices5CrearReserva() {
+         return Arrays.asList("Despegar","Avantrip");
+         
+     }
 
     @javax.inject.Inject
     RepositoryService repositoryService;
@@ -160,6 +197,9 @@ public class Reservas {
     
     @javax.inject.Inject
     private Habitaciones habitaciones;
+    
+    @javax.inject.Inject
+    private Configuraciones configuraciones;
     
 
     

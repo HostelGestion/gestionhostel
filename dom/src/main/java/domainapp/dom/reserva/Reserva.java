@@ -27,6 +27,7 @@ import javax.jdo.annotations.VersionStrategy;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.MustSatisfy;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -43,6 +44,7 @@ import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
+import domainapp.dom.configuracion.Configuracion;
 import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
@@ -53,7 +55,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
 /**
- * @author Matías
+ * @author Matías Macaya
  *
  */
 @SuppressWarnings("deprecation")
@@ -87,8 +89,11 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
                     + "WHERE name.indexOf(:email) >= 0 ")
     
 })
+
 @javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
 //@DomainObject
+//@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
+//VER
 @DomainObject(autoCompleteRepository = Reservas.class, autoCompleteAction = "autoCompletarPorEmail")
 	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
 
@@ -98,8 +103,8 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public TranslatableString title() {
         return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
     }
-
-
+    
+    
     public static class NameDomainEvent extends PropertyDomainEvent<Reserva,String> {}
     @javax.jdo.annotations.Column(
             allowsNull="false",
@@ -114,7 +119,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public Huesped getHuesped() {
         return huesped;
     }
-    @javax.jdo.annotations.Column(allowsNull="true")
+    
     public void setHuesped(final Huesped huesped) {
         this.huesped = huesped;
     }
@@ -128,10 +133,11 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public LocalDate getFechaIn() {
         return fechaIn;
     }
-    @javax.jdo.annotations.Column(allowsNull="false")
+    
     public void setFechaIn(final LocalDate fechaIn) {
         this.fechaIn = fechaIn;
     }
+    
     
     @Column	(allowsNull = "false")
     @Property()
@@ -140,9 +146,22 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public LocalDate getFechaSal() {
         return fechaSal;
     }
-    @javax.jdo.annotations.Column(allowsNull="true")
     public void setFechaSal(final LocalDate fechaSal) {
         this.fechaSal = fechaSal;
+    }
+    
+    
+    @Column	(allowsNull = "false")
+    @Property()
+    private int diasEstadia;
+    @javax.jdo.annotations.Column(allowsNull="false")
+    public int getDiasEstadia() {
+        return diasEstadia;
+    }
+    
+    public void setDiasEstadia(final int diasEstadia) {
+        
+    	this.diasEstadia = diasEstadia;
     }
     
 
@@ -169,25 +188,14 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
         this.habitacion = habitacion;
     }
     
+
     
-    /*
-    private String habitacion;
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public String getHabitacion() {
-        return habitacion;
-    }
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public void setHabitacion(final String habitacion) {
-        this.habitacion = habitacion;
-    }
-    */
-    
-    private E_canalVenta canalVenta;
+    private String canalVenta;
     @javax.jdo.annotations.Column(allowsNull="false")
-    public E_canalVenta getCanalVenta() {
+    public String getCanalVenta() {
     	return canalVenta; 
     }
-    public void setCanalVenta(E_canalVenta canalVenta) {
+    public void setCanalVenta(String canalVenta) {
     	this.canalVenta = canalVenta;
     }
     
@@ -210,20 +218,17 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     @Programmatic
 	@Override
 	public CalendarEvent toCalendarEvent() {
-		
+    	
 		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
 		
 	}
     
+
+
     
+ 
     
-    	
-    /*
-    public TranslatableString validateName(final String name) {
-        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
-    }
-	*/
-    
+
     public static class DeleteDomainEvent extends ActionDomainEvent<Reserva> {}
     @Action(
             domainEvent = DeleteDomainEvent.class,
@@ -241,7 +246,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 
     @Override
     public int compareTo(final Reserva other) {
-        return ObjectContracts.compare(this, other, "name");
+        return ObjectContracts.compare(this, other, "fechaIn");
     }
     
     public enum E_canalVenta{
@@ -253,7 +258,5 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     RepositoryService repositoryService;
     
     
-    	
-	
 
 }
