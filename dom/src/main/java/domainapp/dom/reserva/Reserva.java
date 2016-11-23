@@ -44,7 +44,7 @@ import org.joda.time.LocalDate;
 
 import com.google.inject.Inject;
 
-import domainapp.dom.configuracion.Configuracion;
+
 import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;

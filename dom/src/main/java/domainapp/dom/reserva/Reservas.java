@@ -48,8 +48,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.ReadableInstant;
 
-import domainapp.dom.configuracion.Configuracion;
-import domainapp.dom.configuracion.Configuraciones;
+
 import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
@@ -124,8 +123,8 @@ public class Reservas {
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
             //@Parameter( mustSatisfy = validaFechas.FechaInEspecificaciones.class )
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
-            @ParameterLayout(named="Fecha llegada") LocalDate fechaSal,
-    		@ParameterLayout(named="Días de estadía") int diasEstadia,
+            @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
+    		
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta)
@@ -136,7 +135,7 @@ public class Reservas {
         obj.setHuesped(huesped);
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
-        obj.setDiasEstadia(diasEstadia);
+        
         obj.setHabitacion(habitacion);
         obj.setNumHues(numHues);
         obj.setCanalVenta(canalVenta);
@@ -149,23 +148,22 @@ public class Reservas {
     // Fin de Region Crear Reserva.
     
     
-    //diasEstadia = daysBetween(fechaIn, fechaSal);
-    
-    // Validación fecha de Reserva inicial
     @Programmatic
     public String validate1CrearReserva(final LocalDate fechaIn){
     	
     	
-    	LocalDate hoyy = LocalDate.now();
-    	if (fechaIn.isBefore(hoyy)) {
+    	
+    	
+    	LocalDate hoy = LocalDate.now();
+    	if (fechaIn.isBefore(hoy)) {
 			return "Una Reserva no puede empezar en el pasado";
 		}
     	  	
     	
     	return null;
+    	
     }
     
-    //
     
  
     
@@ -198,8 +196,7 @@ public class Reservas {
     @javax.inject.Inject
     private Habitaciones habitaciones;
     
-    @javax.inject.Inject
-    private Configuraciones configuraciones;
+
     
 
     
