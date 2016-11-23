@@ -76,25 +76,7 @@ public class TipodeHabitaciones {
     }
     //endregion
 
-    //region > findByName (action)
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
-    @MemberOrder(sequence = "2")
-    public List<TipodeHabitacion> findByName(
-            @ParameterLayout(named="Name")
-            final String name
-    ) {
-        return repositoryService.allMatches(
-                new QueryDefault<>(
-                        TipodeHabitacion.class,
-                        "findByName",
-                        "name", name));
-    }
-    //endregion
+    
     
     
 
@@ -112,24 +94,24 @@ public class TipodeHabitaciones {
     )
     @MemberOrder(sequence = "3")
     public TipodeHabitacion crearTipoDeHabitacion(
-            final @ParameterLayout(named="Nombre") String name,
-           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Cantidad de Camas") Integer camas,
-           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Tipo de Precio") Etipodeprecio tprecio,
-           final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Tipo de Sexo admitido en Habitaciones") Etipodesexo tsexo
+            
+           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Cantidad de Camas") Integer camas,
+           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Tipo de Precio") Etipodeprecio tprecio,
+           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Tipo de Sexo admitido en Habitaciones") Etipodesexo tsexo
            ) {
         final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
-        obj.setName(name);
+        
         obj.setCamas(camas);
         obj.setTprecio(tprecio);
         obj.setTsexo(tsexo);
-        obj.setDescripcion(name + ", camas: " + camas.toString() + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
+        obj.setDescripcion("Camas: " + camas.toString() + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
        
         repositoryService.persist(obj);
         return obj;
     }
     
-    public Collection<Integer> choices1CrearTipoDeHabitacion() {
-        return Arrays.asList(2,5,10);
+    public Collection<Integer> choices0CrearTipoDeHabitacion() {
+        return Arrays.asList(2,3,4,6,8,10);
     }
     //endregion
 

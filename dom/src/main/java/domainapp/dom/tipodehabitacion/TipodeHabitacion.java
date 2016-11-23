@@ -60,7 +60,6 @@ import org.apache.isis.applib.util.ObjectContracts;
                         + "FROM dom.tipodehabitacion.TipodeHabitacion "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="TipodeHabitacion_descripcion_UNQ", members = {"descripcion"})
 @DomainObject
 public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
 
@@ -80,13 +79,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
     @Property(
         domainEvent = NameDomainEvent.class
     )
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(final String name) {
-        this.name = name;
-    }
+
     
     private Integer camas;
 	@javax.jdo.annotations.Column(allowsNull="false")
@@ -151,9 +144,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         this.descripcion = descripcion;
     }
     
-    public TranslatableString validateName(final String name) {
-        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
-    }
+
 
     
     
