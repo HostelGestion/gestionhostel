@@ -121,10 +121,8 @@ public class Reservas {
     		
             final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
-            //@Parameter( mustSatisfy = validaFechas.FechaInEspecificaciones.class )
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
             @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
-    		
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta)
@@ -135,7 +133,6 @@ public class Reservas {
         obj.setHuesped(huesped);
         obj.setFechaIn(fechaIn);
         obj.setFechaSal(fechaSal);
-        
         obj.setHabitacion(habitacion);
         obj.setNumHues(numHues);
         obj.setCanalVenta(canalVenta);
@@ -147,25 +144,26 @@ public class Reservas {
     
     // Fin de Region Crear Reserva.
     
-    
+    //Región validar Reserva
     @Programmatic
-    public String validate1CrearReserva(final LocalDate fechaIn){
-    	
-    	
-    	
-    	
-    	LocalDate hoy = LocalDate.now();
-    	if (fechaIn.isBefore(hoy)) {
-			return "Una Reserva no puede empezar en el pasado";
-		}
-    	  	
-    	
-    	return null;
-    	
+    public String validateCrearReserva(
+    		final Huesped huesped,
+    		final LocalDate fechaIn,
+    		final LocalDate fechaSal,
+    		final Habitacion habitacion,
+    		//final int diasEstadia,
+    		final int numHues,
+    		final String canalVenta){
+    	if (fechaIn.isBefore(LocalDate.now()))
+    		{return "Corregir la fecha inicial";}
+    	if (fechaSal.isBefore(fechaIn))
+    		{return "Corregir la fecha de salida";}
+   
+    
+    return "";
     }
     
-    
- 
+  //Fin región validar Reserva
     
     // Autocompleta el Huésped a partir de su email:
     public Collection<Huesped> autoComplete0CrearReserva(final @MinLength(2) String email) {
