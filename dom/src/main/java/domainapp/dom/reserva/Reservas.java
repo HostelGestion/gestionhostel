@@ -151,9 +151,10 @@ public class Reservas {
     		final LocalDate fechaIn,
     		final LocalDate fechaSal,
     		final Habitacion habitacion,
-    		//final int diasEstadia,
     		final int numHues,
+    	
     		final String canalVenta){
+    	
     	if (fechaIn.isBefore(LocalDate.now()))
     		{return "Corregir la fecha inicial";}
     	if (fechaSal.isBefore(fechaIn))

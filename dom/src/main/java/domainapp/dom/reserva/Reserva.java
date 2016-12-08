@@ -90,7 +90,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     
 })
 
-@javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
+//@javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
 //@DomainObject
 //@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
 //VER
