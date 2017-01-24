@@ -50,7 +50,8 @@ import domainapp.dom.reserva.Reservas;
         repositoryFor = Caja.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "10",
+        named="Caja"
 )
 public class RepoCaja {
 
