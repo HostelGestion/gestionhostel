@@ -53,7 +53,8 @@ import com.fasterxml.jackson.core.Version;
         repositoryFor = gastos.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "10",
+        named="Gastos"
 )
 public class RepoGastos {
 
