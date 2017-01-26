@@ -62,7 +62,7 @@ import java.time.temporal.ChronoUnit;
         repositoryFor = Reserva.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "1"
 )
 public class Reservas {
 
@@ -116,7 +116,6 @@ public class Reservas {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-
     public Reserva crearReserva(
     		
             final
