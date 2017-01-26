@@ -20,12 +20,18 @@ package domainapp.app.services.homepage;
 
 import java.util.List;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.ViewModel;
 
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.reserva.Reserva;
 import domainapp.dom.reserva.Reservas;
+import domainapp.dom.reserva.Reservas.CreateDomainEvent;
 import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.simple.SimpleObjects;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion;
@@ -47,10 +53,21 @@ public class HomePageViewModel {
     }
     //endregion
 
+    @org.apache.isis.applib.annotation.HomePage
+    public List<Reserva> getListaReservas() {
+        return listaReservas.listarReservas();
+    }
     //region > injected services
-
+    @org.apache.isis.applib.annotation.Action
+    public String crear()
+    {
+    	return "okey"; 
+    }
     @javax.inject.Inject
     Reservas reservas;
+    
+    @javax.inject.Inject
+    Reservas listaReservas;
 
     //endregion
 }
