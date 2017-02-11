@@ -31,10 +31,10 @@ import java.util.List;
 
 
 
-//import domainapp.dom.reserva.Reserva;
+
 import domainapp.dom.reserva.RepoReserva;
 import domainapp.dom.reserva.Reserva;
-//import domainapp.dom.reserva.RepoReserva.CreateDomainEvent;
+
 
 
 @ViewModel
@@ -42,21 +42,22 @@ public class HomePageViewModel {
 	
     //region > title
     public String title() {
-    	return "Reservas";
-        //return getReservas().size() + " reservas";
+    	
+        return getReservas().size() + " reservas";
     }
     //endregion
 
     
 
     //RECUPERAR
-    /*
+    
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
     public List<Reserva> getReservas() {
         return repoReserva.listarReservas();
     }
- 	*/
+ 	
+    
     
 
     /*

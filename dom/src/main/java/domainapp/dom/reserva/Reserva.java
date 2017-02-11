@@ -28,8 +28,10 @@ import javax.jdo.annotations.Extension;
 import javax.xml.ws.Action;
 
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.applib.value.Blob;
@@ -92,7 +94,10 @@ import domainapp.dom.reserva.estado.Solicitada;
 @DomainObject(objectType="RESERVA")
 
 public class Reserva implements CalendarEventable {
-
+	
+    //public TranslatableString title() {
+        //return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
+    //}
     
     public Reserva()
 	{
@@ -175,19 +180,25 @@ public class Reserva implements CalendarEventable {
 		this.estadoDisponible = estadoDisponible;
 	}
 
-    @Property(
-            hidden = Where.ANYWHERE
-        )
+    @Property(hidden = Where.ANYWHERE)
+    @Column(allowsNull = "false")
 	@Persistent(extensions= {
 			@Extension(vendorName = "datanucleous", key = "mapping-strategy",
 			value = "per-implementation"),
 			@Extension(vendorName = "datanucleus", key = "implementation-clases", value = 
 			"domainapp.dom.reserva.estado.Disponible"
-			+",domainapp.dom.reserva.estado.Solicitada"
-			+",domainapp.dom.reserva.estado.Confirmada"
-			+",domainapp.dom.reserva.estado.Ocupada"
-			+",domainapp.dom.reserva.estado.Liberada"
-					)})
+			+ ",domainapp.dom.reserva.estado.Solicitada"
+			+ ",domainapp.dom.reserva.estado.Confirmada"
+			+ ",domainapp.dom.reserva.estado.Ocupada"
+			+ ",domainapp.dom.reserva.estado.Liberada"
+					)}
+					, columns = {
+			@Column(name = "idDisponible"),
+			@Column(name = "idSolicitado"),
+			@Column(name = "idConfirmada"),
+			@Column(name = "idOcupada"),
+			@Column(name = "idTurnoLiberada") })
+    
 	public IEstadoReserva getEstado() {
 		return estado;
 	}
@@ -311,21 +322,32 @@ public class Reserva implements CalendarEventable {
 	
 	public String title()
 	{
-		return "reserva "+this.getEstado().getClass().getSimpleName();
+		return "reserva "+this.getEstado();
 	}
 
 	@Override
 	public String getCalendarName() {
-		// TODO Auto-generated method stub
-		return "Reservas";
+		
+		return "Dormi: " + getHabitacion().getName();
 	}
 
-	@Override
+	//@Programmatic
+	//@Override
 	public CalendarEvent toCalendarEvent() {
-		// TODO Auto-generated method stub
-		return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(),"res", "");
+		
+		return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
+		//return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), "");
+
 	}
 	
+	
+	//@Programmatic
+    public String getNotes() {
+    	
+    	 //return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
+    	 return " Cama/s: " + getNumHues() + " @ dormi " + getHabitacion().getName() + ", " + getHuesped().getName() + ".";
+
+    }
     /*
     @Programmatic
     @Override
@@ -334,21 +356,9 @@ public class Reserva implements CalendarEventable {
 		return getHabitacion().getName();
 	}
     
-    @Programmatic
-    public String getNotes() {
-    	
-    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
-    	
-    }
     
-    @Programmatic
-	@Override
-	public CalendarEvent toCalendarEvent() {
-    	
-		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		
-	}
-    */
+    
+
 
 
     
