@@ -20,54 +20,61 @@ package domainapp.app.services.homepage;
 
 import java.util.List;
 
+import org.apache.isis.applib.annotation.CollectionLayout;
+import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.ViewModel;
 
-import domainapp.dom.huesped.Huesped;
-import domainapp.dom.huesped.Huespedes;
+import java.util.List;
+
+
+
+
+//import domainapp.dom.reserva.Reserva;
+import domainapp.dom.reserva.RepoReserva;
 import domainapp.dom.reserva.Reserva;
-import domainapp.dom.reserva.Reservas;
-import domainapp.dom.reserva.Reservas.CreateDomainEvent;
-import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.simple.SimpleObjects;
-import domainapp.dom.tipodehabitacion.TipodeHabitacion;
-import domainapp.dom.tipodehabitacion.TipodeHabitaciones;
+//import domainapp.dom.reserva.RepoReserva.CreateDomainEvent;
+
 
 @ViewModel
 public class HomePageViewModel {
-
+	
     //region > title
     public String title() {
-        return getReservas().size() + " reservas";
+    	return "Reservas";
+        //return getReservas().size() + " reservas";
     }
     //endregion
 
+    
+
+    //RECUPERAR
+    /*
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
     public List<Reserva> getReservas() {
-        return reservas.listarReservas();
+        return repoReserva.listarReservas();
     }
-    //endregion
+ 	*/
+    
 
-    @org.apache.isis.applib.annotation.HomePage
-    public List<Reserva> getListaReservas() {
-        return listaReservas.listarReservas();
-    }
-    //region > injected services
+    /*
+    //region > Botón nueva Reserva - seguir trabajándolo
     @org.apache.isis.applib.annotation.Action
     public String crear()
     {
     	return "okey"; 
     }
-    @javax.inject.Inject
-    Reservas reservas;
+    */
+	//endregion
+	
+	@javax.inject.Inject
+    RepoReserva repoReserva;
     
-    @javax.inject.Inject
-    Reservas listaReservas;
-
-    //endregion
+   
+    
+    
+	
+    
 }

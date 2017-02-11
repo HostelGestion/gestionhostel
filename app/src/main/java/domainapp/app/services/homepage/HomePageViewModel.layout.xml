@@ -36,8 +36,7 @@
                     <collection id="listaReservas" defaultView="table"/>
                 </bs3:col>
                 <bs3:col span="9">
-				<action id="crear" cssClass="alinearIzquerda" ></action>
-               <collection id="reservas" defaultView="calendar"/>
+					<collection id="repoReserva" defaultView="calendar"/>
                 </bs3:col>
                 
             </bs3:row>

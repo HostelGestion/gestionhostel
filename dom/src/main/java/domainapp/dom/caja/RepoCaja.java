@@ -43,7 +43,7 @@ import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.reserva.Reserva;
-import domainapp.dom.reserva.Reservas;
+import domainapp.dom.reserva.RepoReserva;
 
 @DomainService(
         nature = NatureOfService.VIEW,

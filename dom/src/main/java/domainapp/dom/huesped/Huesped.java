@@ -34,7 +34,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.util.ObjectContracts;
 
 import domainapp.dom.reserva.Reserva;
-import domainapp.dom.reserva.Reservas;
+import domainapp.dom.reserva.RepoReserva;
 
 @SuppressWarnings("deprecation")
 @javax.jdo.annotations.PersistenceCapable(
