@@ -17,7 +17,7 @@
  *  under the License.
  */
 package domainapp.dom.reserva;
-
+/*
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -57,21 +57,61 @@ import domainapp.dom.simple.SimpleObject;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion;
 import java.time.temporal.ChronoUnit;
 
+
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = Reserva.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "1"
 )
-public class Reservas {
+public class RepoReserva {
+	*/
+	
+import java.sql.Date;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-    //region > title
-    public TranslatableString title() {
-        return TranslatableString.tr("Reservas");
-    }
-    //endregion
+import javax.inject.Inject;
 
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.BookmarkPolicy;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.MinLength;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Optionality;
+import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.query.QueryDefault;
+import org.apache.isis.applib.services.repository.RepositoryService;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
+import domainapp.dom.habitacion.Habitacion;
+import domainapp.dom.habitacion.Habitaciones;
+import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
+
+
+
+@DomainService(
+        nature = NatureOfService.VIEW_MENU_ONLY,
+        repositoryFor = Reserva.class
+)
+@DomainServiceLayout(
+        named="Reservas",
+        menuOrder = "1"
+)
+public class RepoReserva {
+	
+	
+	
     //region > listAll (action)
     @Action(
             semantics = SemanticsOf.SAFE
@@ -81,10 +121,10 @@ public class Reservas {
     )
     @MemberOrder(sequence = "1")
     public List<Reserva> listarReservas() {
-        return repositoryService.allInstances(Reserva.class);
+        return repositorio.allInstances(Reserva.class);
     }
     
-    //region > findByName (action)
+    //region > buscarPorNombre (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -96,50 +136,37 @@ public class Reservas {
             @ParameterLayout(named="Name")
             final String name
     ) {
-        return repositoryService.allMatches(
+        return repositorio.allMatches(
                 new QueryDefault<>(
                         Reserva.class,
                         "findByName",
                         "name", name));
     }
-    
 
-  //region > Crear Reserva (action)
-    public static class CreateDomainEvent extends ActionDomainEvent<Reservas> {
-        public CreateDomainEvent(final Reservas source, final Identifier identifier, final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
     
-    
-    @Action(
-            domainEvent = CreateDomainEvent.class
+    @ActionLayout(
+            cssClassFa = "fa fa-thumbs-up"
     )
-    @MemberOrder(sequence = "3")
-
-    public Reserva crearReserva(
-    		
-            final
+        @Action(semantics = SemanticsOf.SAFE)
+        @MemberOrder(sequence = "20")
+    public Reserva crearReserva(final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
             @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta)
-
-        
-    {
-        final Reserva obj = repositoryService.instantiate(Reserva.class);
-        obj.setHuesped(huesped);
-        obj.setFechaIn(fechaIn);
-        obj.setFechaSal(fechaSal);
-        obj.setHabitacion(habitacion);
-        obj.setNumHues(numHues);
-        obj.setCanalVenta(canalVenta);
-        
-        
-        repositoryService.persist(obj);	
-        return obj;
+ {
+    	//final Reserva mireserva = repositorio.instantiate(Reserva.class);
+    	Reserva mireserva = repositorio.instantiate(Reserva.class);
+    	mireserva.setHuesped(huesped);
+    	mireserva.setFechaIn(fechaIn);
+    	mireserva.setFechaSal(fechaSal);
+    	mireserva.setHabitacion(habitacion);
+    	mireserva.setNumHues(numHues);
+    	mireserva.setCanalVenta(canalVenta);
+    	repositorio.persist(mireserva);
+    	return mireserva;
     }
     
     // Fin de Region Crear Reserva.
@@ -186,8 +213,8 @@ public class Reservas {
          
      }
 
-    @javax.inject.Inject
-    RepositoryService repositoryService;
+    //@javax.inject.Inject
+    //RepositoryService repositoryService;
     
     @javax.inject.Inject
     private Huespedes huespedes;
@@ -195,7 +222,9 @@ public class Reservas {
     @javax.inject.Inject
     private Habitaciones habitaciones;
     
-
+    
+    @Inject
+    RepositoryService repositorio;
     
 
     

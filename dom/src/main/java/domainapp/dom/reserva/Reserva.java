@@ -18,64 +18,60 @@
  */
 package domainapp.dom.reserva;
 
-import java.io.Serializable;
-
-import javax.jdo.annotations.Column;
 import javax.jdo.annotations.IdentityType;
-import javax.jdo.annotations.VersionStrategy;
+import javax.jdo.annotations.Persistent;
+import javax.activation.MimeType;
+import javax.activation.MimeTypeParseException;
+import javax.inject.Inject;
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Extension;
+import javax.xml.ws.Action;
 
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.AutoComplete;
 import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.MustSatisfy;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
-import org.apache.isis.applib.util.ObjectContracts;
-import org.assertj.core.util.Lists;
-import org.datanucleus.store.types.wrappers.Collection;
+import org.apache.isis.applib.value.Blob;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import com.google.inject.Inject;
-
-
 import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
-import domainapp.dom.huesped.Huespedes;
+import domainapp.dom.reserva.estado.Confirmada;
+import domainapp.dom.reserva.estado.Disponible;
+import domainapp.dom.reserva.estado.IEstadoReserva;
+import domainapp.dom.reserva.estado.Liberada;
+import domainapp.dom.reserva.estado.Ocupada;
+import domainapp.dom.reserva.estado.Solicitada;
 
-//import domainapp.dom.huesped.Huesped.E_canalVenta;
 
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable; 
 
-/**
- * @author Matías Macaya
- *
- */
-@SuppressWarnings("deprecation")
+
 @javax.jdo.annotations.PersistenceCapable(
-        identityType=IdentityType.DATASTORE,
         schema = "simple",
-        table = "Reserva"
+        table = "Reserva",
+        identityType=IdentityType.DATASTORE
 )
+/*
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
 @javax.jdo.annotations.Version(
 //        strategy=VersionStrategy.VERSION_NUMBER,
         strategy= VersionStrategy.DATE_TIME,
-        column="version")
+        column="version")*/
 @javax.jdo.annotations.Queries({
-    @javax.jdo.annotations.Query(
-            name = "find", language = "JDOQL",
+	@javax.jdo.annotations.Query(
+            name = "listarTodas", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.reserva.Reserva "),
+                    + "FROM domainapp.dom.reserva.Reserva ")
+    
+    /*
     @javax.jdo.annotations.Query(
             name = "findByName", language = "JDOQL",
             value = "SELECT "
@@ -87,33 +83,139 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
             value = "SELECT "
                     + "FROM domainapp.dom.huesped.Huesped "
                     + "WHERE name.indexOf(:email) >= 0 ")
+                    */
     
 })
 
-//@javax.jdo.annotations.Unique(name="Reserva_fechaIn_UNQ", members = {"fechaIn"})
-//@DomainObject
-//@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.APPLICATION)
-//VER
-@DomainObject(autoCompleteRepository = Reservas.class, autoCompleteAction = "autoCompletarPorEmail")
-	public class Reserva implements Comparable<Reserva>, Serializable, CalendarEventable {
-
-    public static final int NAME_LENGTH = 40;
 
 
-    public TranslatableString title() {
-        return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
-    }
+
+
+@DomainObject(objectType="RESERVA")
+
+public class Reserva implements CalendarEventable {
+	
+    //public TranslatableString title() {
+        //return TranslatableString.tr("Reserva: {name}", "name", huesped.getName());
+    //}
     
+    public Reserva()
+	{
+		this.estadoDisponible = new Disponible(this);
+		this.estadoSolicitada = new Solicitada(this);
+		this.estadoConfirmada = new Confirmada(this);
+		this.estadoOcupada = new Ocupada(this);
+		this.estadoLiberada = new Liberada(this);
+		this.estado=this.estadoDisponible;
+	}
     
-    public static class NameDomainEvent extends PropertyDomainEvent<Reserva,String> {}
-    @javax.jdo.annotations.Column(
-            allowsNull="false",
-            length = NAME_LENGTH
-    )
+	private IEstadoReserva estado;
+	private Solicitada estadoSolicitada;
+	private Disponible estadoDisponible;
+	private Confirmada estadoConfirmada;
+	private Liberada estadoLiberada;
+	private Ocupada estadoOcupada;
+	
+	
+	@javax.jdo.annotations.Column(allowsNull="true")
     @Property(
-        domainEvent = NameDomainEvent.class
+        hidden = Where.ANYWHERE
+    )	
+	
+	
+	public Liberada getEstadoLiberada() {
+		return estadoLiberada;
+	}
+
+	public void setEstadoLiberada(Liberada estadoLiberada) {
+		this.estadoLiberada = estadoLiberada;
+	}
+
+	@javax.jdo.annotations.Column(allowsNull="false")
+    @Property(
+        hidden = Where.ANYWHERE
+    )	
+	public Ocupada getEstadoOcupada() {
+		return estadoOcupada;
+	}
+
+	public void setEstadoOcupada(Ocupada estadoOcupada) {
+		this.estadoOcupada = estadoOcupada;
+	}
+
+	@javax.jdo.annotations.Column(allowsNull="false")
+    @Property(
+        hidden = Where.ANYWHERE
     )
+    public Confirmada getEstadoConfirmada() {
+		return estadoConfirmada;
+	}
+
+	public void setEstadoConfirmada(Confirmada estadoConfirmada) {
+		this.estadoConfirmada = estadoConfirmada;
+	}
+
+	@javax.jdo.annotations.Column(allowsNull="false")
+    @Property(
+            hidden = Where.ANYWHERE
+        )
+	public Solicitada getEstadoSolicitada() {
+		return this.estadoSolicitada;
+	}
+
+	public void setEstadoSolicitada(Solicitada estadoSolicitada) {
+		this.estadoSolicitada = estadoSolicitada;
+	}
+	
+	
+    @javax.jdo.annotations.Column(allowsNull="false")
+    @Property(
+            hidden = Where.ANYWHERE
+        )
+	public Disponible getEstadoDisponible() {
+		return estadoDisponible;
+	}
+
+	public void setEstadoDisponible(Disponible estadoDisponible) {
+		this.estadoDisponible = estadoDisponible;
+	}
+
+    @Property(hidden = Where.ANYWHERE)
+    @Column(allowsNull = "false")
+	@Persistent(extensions= {
+			@Extension(vendorName = "datanucleous", key = "mapping-strategy",
+			value = "per-implementation"),
+			@Extension(vendorName = "datanucleus", key = "implementation-clases", value = 
+			"domainapp.dom.reserva.estado.Disponible"
+			+ ",domainapp.dom.reserva.estado.Solicitada"
+			+ ",domainapp.dom.reserva.estado.Confirmada"
+			+ ",domainapp.dom.reserva.estado.Ocupada"
+			+ ",domainapp.dom.reserva.estado.Liberada"
+					)}
+					, columns = {
+			@Column(name = "idDisponible"),
+			@Column(name = "idSolicitado"),
+			@Column(name = "idConfirmada"),
+			@Column(name = "idOcupada"),
+			@Column(name = "idTurnoLiberada") })
     
+	public IEstadoReserva getEstado() {
+		return estado;
+	}
+
+	public void setEstado(IEstadoReserva estado) {
+		this.estado = estado;
+	}
+
+	
+	@Action()
+	public Reserva reservar()
+	{
+		this.getEstado().reservar();
+		return this;
+	}
+	
+	
     private Huesped huesped;
     @javax.jdo.annotations.Column(allowsNull="false")
     public Huesped getHuesped() {
@@ -126,10 +228,11 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     
 
     
-    @Column	(allowsNull = "false")
+    
     @Property()
-    private LocalDate fechaIn;
     @javax.jdo.annotations.Column(allowsNull="false")
+    private LocalDate fechaIn;
+    
     public LocalDate getFechaIn() {
         return fechaIn;
     }
@@ -139,10 +242,11 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     }
     
     
-    @Column	(allowsNull = "false")
+    
     @Property()
+    @javax.jdo.annotations.Column(allowsNull="false")
     private LocalDate fechaSal;
-    @javax.jdo.annotations.Column(allowsNull="true")
+    
     public LocalDate getFechaSal() {
         return fechaSal;
     }
@@ -151,47 +255,37 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     }
     
     
-    @Column	(allowsNull = "false")
+   
+    
     @Property()
-    private int diasEstadia;
     @javax.jdo.annotations.Column(allowsNull="false")
-    public int getDiasEstadia() {
-        return diasEstadia;
-    }
-    
-    public void setDiasEstadia(final int diasEstadia) {
-        
-    	this.diasEstadia = diasEstadia;
-    }
-    
-
-    
     private int numHues;
-    @javax.jdo.annotations.Column(allowsNull="true")
     public int getNumHues() {
         return numHues;
     }
-    @javax.jdo.annotations.Column(allowsNull="true")
+   
     public void setNumHues(final int numHues) {
         this.numHues = numHues;
     }
 
 
-    
+    @Property()
+    @javax.jdo.annotations.Column(allowsNull="false")
     private Habitacion habitacion;
-    @javax.jdo.annotations.Column(allowsNull="true")
+    
     public Habitacion getHabitacion() {
         return habitacion;
     }
-    @javax.jdo.annotations.Column(allowsNull="true")
+    
     public void setHabitacion(final Habitacion habitacion) {
         this.habitacion = habitacion;
     }
     
 
-    
-    private String canalVenta;
+    @Property()
     @javax.jdo.annotations.Column(allowsNull="false")
+    private String canalVenta;
+    
     public String getCanalVenta() {
     	return canalVenta; 
     }
@@ -200,7 +294,61 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     }
     
     
+    
+    @Action()
+	public Reserva disponer() {
+		this.getEstado().disponer();
+		return this;
+	}
 
+	@Action()
+	public Reserva confirmar() {
+		this.getEstado().confirmar();
+		return this;
+	}
+
+	@Action()
+	public Reserva checkin() {
+		this.getEstado().checkin();
+		return this;
+	}
+
+	@Action()
+	public Reserva checkout() {
+		this.getEstado().checkout();
+		return this;
+	}
+
+	
+	public String title()
+	{
+		return "reserva "+this.getEstado();
+	}
+
+	@Override
+	public String getCalendarName() {
+		
+		return "Dormi: " + getHabitacion().getName();
+	}
+
+	//@Programmatic
+	//@Override
+	public CalendarEvent toCalendarEvent() {
+		
+		return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
+		//return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), "");
+
+	}
+	
+	
+	//@Programmatic
+    public String getNotes() {
+    	
+    	 //return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
+    	 return " Cama/s: " + getNumHues() + " @ dormi " + getHabitacion().getName() + ", " + getHuesped().getName() + ".";
+
+    }
+    /*
     @Programmatic
     @Override
 	public String getCalendarName() {
@@ -208,25 +356,13 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 		return getHabitacion().getName();
 	}
     
-    @Programmatic
-    public String getNotes() {
-    	
-    	 return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
-    	
-    }
     
-    @Programmatic
-	@Override
-	public CalendarEvent toCalendarEvent() {
-    	
-		return new CalendarEvent(getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		
-	}
     
 
 
+
     
- 
+	/*
     
 
     public static class DeleteDomainEvent extends ActionDomainEvent<Reserva> {}
@@ -237,18 +373,20 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
     public void delete() {
         repositoryService.remove(this);
     }
-    
+    */
 
 
 	@Inject
 	TitleService titleService;
 
-
+	/*
     @Override
     public int compareTo(final Reserva other) {
         return ObjectContracts.compare(this, other, "fechaIn");
     }
-    
+    */
+	
+	
     public enum E_canalVenta{
     	Booking, Despegar;
     }
