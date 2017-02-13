@@ -21,6 +21,7 @@ package domainapp.dom.caja;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.math.BigDecimal;
 
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
@@ -38,20 +39,21 @@ import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.joda.time.LocalDate;
 
-import domainapp.dom.habitacion.Habitacion;
+//import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
-import domainapp.dom.reserva.Reserva;
-import domainapp.dom.reserva.Reservas;
 
 @DomainService(
         nature = NatureOfService.VIEW,
         repositoryFor = Caja.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "10",
+        named="Caja"
 )
+
 public class RepoCaja {
 
     //region > title
@@ -108,15 +110,17 @@ public class RepoCaja {
             final @ParameterLayout(named="Name") String name,
             final @ParameterLayout(named="Huésped") Huesped huesped,
             final @ParameterLayout(named="Monto (ARS)") Double monto,
-            final @ParameterLayout(named="Concepto") String concepto
-            
+            final @ParameterLayout(named="Concepto") String concepto,
+            final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago
     		) {
         final Caja obj = repositoryService.instantiate(Caja.class);
         obj.setName(name);
         obj.setHuesped(huesped);
         obj.setMonto(monto);
-        obj.setConcepto(concepto);
+     //   obj.setConcepto(concepto);
         repositoryService.persist(obj);
+       
+        obj.setFechaDePago(fechaDePago);
         return obj;
     }
     
