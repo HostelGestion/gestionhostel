@@ -186,6 +186,8 @@ public class RepoReserva {
     		{return "Corregir la fecha inicial";}
     	if (fechaSal.isBefore(fechaIn))
     		{return "Corregir la fecha de salida";}
+    	if (numHues > habitacion.getTipodeHabitacion().getCamas())
+    		{return "La habitación no admite ese número de huéspedes.";}
    
     
     return "";
