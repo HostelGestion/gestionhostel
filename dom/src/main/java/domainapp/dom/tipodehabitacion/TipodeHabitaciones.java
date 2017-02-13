@@ -53,7 +53,8 @@ import domainapp.dom.simple.TipodeHabitacion.Etipodesexo;
         repositoryFor = TipodeHabitacion.class
 )
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "10",
+        named="Habitaciones"
 )
 public class TipodeHabitaciones {
 

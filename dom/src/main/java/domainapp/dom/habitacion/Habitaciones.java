@@ -34,8 +34,10 @@ import domainapp.dom.tipodehabitacion.TipodeHabitaciones;
         nature = NatureOfService.VIEW,
         repositoryFor = Habitaciones.class
 )
+
 @DomainServiceLayout(
-        menuOrder = "10"
+        menuOrder = "10",
+        named="Habitaciones"
 )
 public class Habitaciones {
 
