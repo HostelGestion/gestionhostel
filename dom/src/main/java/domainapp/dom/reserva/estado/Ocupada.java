@@ -20,6 +20,12 @@ public class Ocupada implements IEstadoReserva{
 	{
 		this.reserva=reserva;
 	}
+	
+	public String getNombre()
+	{
+		return "OCUPADA";
+	}
+	
 	@Override
 	public void reservar() {
 		

@@ -16,6 +16,14 @@ import domainapp.dom.reserva.Reserva;
 @DomainObject(objectType="SOLICITADA")
 public class Solicitada implements IEstadoReserva{
 	private Reserva reserva;
+	
+	
+	public String getNombre()
+	{
+		return "SOLICITADA";
+	}
+	
+	
 	public Solicitada(Reserva reserva)
 	{
 		this.reserva= reserva;

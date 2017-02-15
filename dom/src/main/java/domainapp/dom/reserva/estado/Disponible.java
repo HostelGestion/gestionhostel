@@ -27,6 +27,13 @@ public class Disponible implements IEstadoReserva{
 	{
 		this.reserva=reserva;
 	}
+	
+	public String getNombre()
+	{
+		return "DISPONIBLE";
+	}
+	
+	
 	@Override
 	public void reservar() {
 		this.reserva.setEstado(this.reserva.getEstadoSolicitada());

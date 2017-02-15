@@ -155,7 +155,11 @@ public class RepoReserva {
             @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
-    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta)
+    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta,
+    		@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
+    			
+
+    		)
  {
     	//final Reserva mireserva = repositorio.instantiate(Reserva.class);
     	Reserva mireserva = repositorio.instantiate(Reserva.class);
@@ -183,9 +187,9 @@ public class RepoReserva {
     		final String canalVenta){
     	
     	if (fechaIn.isBefore(LocalDate.now()))
-    		{return "Corregir la fecha inicial";}
+    		{return "Corregir la fecha inicial.";}
     	if (fechaSal.isBefore(fechaIn))
-    		{return "Corregir la fecha de salida";}
+    		{return "Corregir la fecha de salida.";}
     	if (numHues > habitacion.getTipodeHabitacion().getCamas())
     		{return "La habitación no admite ese número de huéspedes.";}
    

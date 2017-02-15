@@ -20,6 +20,11 @@ import domainapp.dom.reserva.Reserva;
 public class Liberada implements IEstadoReserva{
 	private Reserva reserva;
 	
+	public String getNombre()
+	{
+		return "LIBERADA";
+	}
+	
 	public Liberada(Reserva reserva) {
 		this.reserva=reserva;
 	}

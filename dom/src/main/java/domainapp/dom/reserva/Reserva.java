@@ -27,7 +27,11 @@ import javax.jdo.annotations.Column;
 import javax.jdo.annotations.Extension;
 import javax.xml.ws.Action;
 
+import org.apache.isis.applib.annotation.Disabled;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Named;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Where;
@@ -179,6 +183,8 @@ public class Reserva implements CalendarEventable {
 	public void setEstadoDisponible(Disponible estadoDisponible) {
 		this.estadoDisponible = estadoDisponible;
 	}
+	
+	
 
     @Property(hidden = Where.ANYWHERE)
     @Column(allowsNull = "false")
@@ -202,12 +208,19 @@ public class Reserva implements CalendarEventable {
 	public IEstadoReserva getEstado() {
 		return estado;
 	}
-
-	public void setEstado(IEstadoReserva estado) {
-		this.estado = estado;
+    @SuppressWarnings("deprecation")
+	@Disabled	
+	public void setEstado(IEstadoReserva estadoReserva) {
+		this.estado = estadoReserva;
 	}
 
-	
+    
+	@MemberOrder(name="Estado", sequence="1")
+	public String getNombreEstado()
+	{
+		return estado.getNombre();
+	}
+    
 	@Action()
 	public Reserva reservar()
 	{
