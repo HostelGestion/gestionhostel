@@ -347,7 +347,7 @@ public class Reserva implements CalendarEventable {
 	
 	public String title()
 	{
-		return "reserva "+this.getEstado();
+		return "Reserva "+this.getEstado().getClass().getSimpleName();
 	}
 
 	@Override
