@@ -65,6 +65,13 @@
  		    <artifactId>commons-email</artifactId>
  		    <version>1.4</version>
  		</dependency>
+ 		
+ 		
+ 		<dependency>
+    <groupId>org.isisaddons.wicket.wickedcharts</groupId>
+    <artifactId>isis-wicket-wickedcharts-cpt</artifactId>
+    <version>1.13.0</version>
+</dependency>
  		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
  		<dependency>
  		    <groupId>org.apache.httpcomponents</groupId>
