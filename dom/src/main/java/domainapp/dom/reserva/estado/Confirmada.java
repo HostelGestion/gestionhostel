@@ -15,6 +15,12 @@ import domainapp.dom.reserva.Reserva;
 @DomainObject(objectType="CONFIRMADA")
 public class Confirmada implements IEstadoReserva {
 	private Reserva reserva;
+	
+	public String getNombre()
+	{
+		return "CONFIRMADA";
+	}
+	
 	public Confirmada (Reserva reserva)
 	{
 		this.reserva= reserva;
