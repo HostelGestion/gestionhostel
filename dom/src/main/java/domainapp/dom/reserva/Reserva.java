@@ -326,10 +326,25 @@ public class Reserva implements CalendarEventable {
 		return false;
 		}
 	}
+	
 	@Action()
 	public Reserva confirmar() {
 		this.getEstado().confirmar();
 		return this;
+	}
+	//@Action()
+	public boolean hideConfirmar()
+	{
+		final String ocultarConfirmar= this.getEstado().getClass().getSimpleName();
+		if (ocultarConfirmar.equals("Ocupada") || ocultarConfirmar.equals("Liberada"))
+		{  
+			
+			return true;
+		}
+		else
+		{
+		return false;
+		}
 	}
 
 	@Action()
