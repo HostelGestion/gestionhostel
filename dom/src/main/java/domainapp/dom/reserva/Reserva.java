@@ -203,7 +203,7 @@ public class Reserva implements CalendarEventable {
 			@Column(name = "idSolicitado"),
 			@Column(name = "idConfirmada"),
 			@Column(name = "idOcupada"),
-			@Column(name = "idTurnoLiberada") })
+			@Column(name = "idLiberada") })
     
 	public IEstadoReserva getEstado() {
 		return estado;
@@ -221,13 +221,25 @@ public class Reserva implements CalendarEventable {
 		return estado.getNombre();
 	}
     
-	@Action()
+	
 	public Reserva reservar()
 	{
 		this.getEstado().reservar();
 		return this;
 	}
-	
+	public boolean hideReservar()
+	{
+		final String ocultarSolicitar= this.getEstado().getClass().getSimpleName();
+		if (ocultarSolicitar.equals("Ocupada") || ocultarSolicitar.equals("Solicitada") || ocultarSolicitar.equals("Confirmada")  || ocultarSolicitar.equals("Liberada"))
+		{  
+			
+			return true;
+		}
+		else
+		{
+		return false;
+		}
+	}
 	
     private Huesped huesped;
     @javax.jdo.annotations.Column(allowsNull="false")
@@ -308,6 +320,11 @@ public class Reserva implements CalendarEventable {
     
     
     
+
+	
+    
+    
+    
     
 	public Reserva disponer() {
 		this.getEstado().disponer();
@@ -316,7 +333,11 @@ public class Reserva implements CalendarEventable {
 	public boolean hideDisponer()
 	{
 		final String ocultarDisponer= this.getEstado().getClass().getSimpleName();
-		if (ocultarDisponer.equals("Solicitada") || ocultarDisponer.equals("Ocupada"))
+		if (ocultarDisponer.equals("Ocupada") ||
+				ocultarDisponer.equals("Disponible")||
+				ocultarDisponer.equals("Solicitada")||
+				ocultarDisponer.equals("Confirmada") ||
+				ocultarDisponer.equals("Liberada"))
 		{  
 			
 			return true;
@@ -327,7 +348,7 @@ public class Reserva implements CalendarEventable {
 		}
 	}
 	
-	@Action()
+	
 	public Reserva confirmar() {
 		this.getEstado().confirmar();
 		return this;
@@ -336,7 +357,9 @@ public class Reserva implements CalendarEventable {
 	public boolean hideConfirmar()
 	{
 		final String ocultarConfirmar= this.getEstado().getClass().getSimpleName();
-		if (ocultarConfirmar.equals("Ocupada") || ocultarConfirmar.equals("Liberada"))
+		if (ocultarConfirmar.equals("Ocupada") ||
+				ocultarConfirmar.equals("Liberada") ||
+				ocultarConfirmar.equals("Confirmada"))
 		{  
 			
 			return true;
@@ -347,22 +370,54 @@ public class Reserva implements CalendarEventable {
 		}
 	}
 
-	@Action()
+	
 	public Reserva checkin() {
 		this.getEstado().checkin();
 		return this;
 	}
+	
+	public boolean hideCheckin()
+	{
+		final String ocultarCheckin= this.getEstado().getClass().getSimpleName();
+		if (ocultarCheckin.equals("Checkin") ||
+				ocultarCheckin.equals("Solicitada") ||
+				ocultarCheckin.equals("Liberada") ||
+				ocultarCheckin.equals("Ocupada"))
+		{  
+			
+			return true;
+		}
+		else
+		{
+		return false;
+		}
+	}
 
-	@Action()
+	
 	public Reserva checkout() {
 		this.getEstado().checkout();
 		return this;
 	}
-
+	
+	public boolean hideCheckout()
+	{
+		final String ocultarCheckout= this.getEstado().getClass().getSimpleName();
+		if (ocultarCheckout.equals("Checkin") ||
+				
+				ocultarCheckout.equals("Liberada"))
+		{  
+			
+			return true;
+		}
+		else
+		{
+		return false;
+		}
+	}
 	
 	public String title()
 	{
-		return "Reserva "+this.getEstado().getClass().getSimpleName();
+		return "Reserva "+ this.getHuesped().getName() + ", " + this.getEstado().getClass().getSimpleName();
 	}
 
 	@Override
