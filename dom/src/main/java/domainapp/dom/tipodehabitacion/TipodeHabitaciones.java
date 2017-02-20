@@ -98,12 +98,15 @@ public class TipodeHabitaciones {
             
            final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Cantidad de Camas") Integer camas,
            final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Tipo de Precio") Etipodeprecio tprecio,
-           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Tipo de Sexo admitido en Habitaciones") Etipodesexo tsexo
+           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Precio") int precio,
+
+           final @Parameter(optionality = Optionality.MANDATORY) @ParameterLayout(named="Género:") Etipodesexo tsexo
            ) {
         final TipodeHabitacion obj = repositoryService.instantiate(TipodeHabitacion.class);
         
         obj.setCamas(camas);
         obj.setTprecio(tprecio);
+        obj.setPrecio(precio);
         obj.setTsexo(tsexo);
         obj.setDescripcion("Camas: " + camas.toString() + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
        

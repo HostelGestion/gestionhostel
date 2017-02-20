@@ -144,7 +144,23 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         this.descripcion = descripcion;
     }
     
+    
+    private int precio;
 
+    @Persistent
+    
+	@javax.jdo.annotations.Column(allowsNull="false")
+	
+    public int getPrecio() {
+    	return precio;
+    }
+    
+   
+    
+    public void setPrecio (int precio)  {
+    	this.precio = precio;
+    }
+    
 
     
     
