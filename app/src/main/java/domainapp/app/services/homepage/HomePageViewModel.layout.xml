@@ -35,10 +35,10 @@
             
                
             	
-            	<bs3:col span="3">
+            	<bs3:col span="5">
                     <collection id="reservas" defaultView="table"/>
                 </bs3:col>
-                <bs3:col span="9">
+                <bs3:col span="7">
 				
                <collection id="reservas" defaultView="calendar"/>
                 </bs3:col>
