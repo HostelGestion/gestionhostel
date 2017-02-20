@@ -1,4 +1,10 @@
 /*
+ *	Copyright ( C ) 2017 , GESTION HOSTEL
+ *
+ *   GESTION HOSTEL is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *  Licensed to the Apache Software Foundation (ASF) under one
  *  or more contributor license agreements.  See the NOTICE file
  *  distributed with this work for additional information
