@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.10" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="domainapp.dom.caja.Caja.NameDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/caja/Caja.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="131" y="511"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="domainapp.dom.caja.Caja.DeleteDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/caja/Caja.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="315" y="498"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="domainapp.dom.caja.Caja" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/caja/Caja.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="126" y="235"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="domainapp.dom.caja.RepoCaja" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/caja/RepoCaja.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="438" y="138"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="domainapp.dom.caja.RepoCaja.CreateDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/caja/RepoCaja.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="437" y="376"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="domainapp.dom.gastos.gastos.DeleteDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/gastos/gastos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="134" x="535" y="455"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="domainapp.dom.gastos.gastos" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/gastos/gastos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="216" x="622" y="10"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="domainapp.dom.gastos.gastos.NameDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/gastos/gastos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="131" x="709" y="455"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="domainapp.dom.gastos.RepoGastos" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/gastos/RepoGastos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="996" y="114"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="domainapp.dom.gastos.RepoGastos.CreateDomainEvent" project="gestionhostel-dom" 
+    file="/gestionhostel-dom/src/main/java/domainapp/dom/gastos/RepoGastos.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="994" y="289"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <nesting id="11">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </nesting>  
+  <nesting id="12">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </nesting>  
+  <nesting id="13">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </nesting>  
+  <nesting id="14">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
+  </nesting>  
+  <nesting id="15">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="16">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="17" name="repoCaja"/>      
+      <multiplicity id="18" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="19">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </nesting>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
