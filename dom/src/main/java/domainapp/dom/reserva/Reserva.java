@@ -470,7 +470,11 @@ public class Reserva implements CalendarEventable {
 	@Override
 	public String getCalendarName() {
 		
-		return "Dormi: " + getHabitacion().getName();
+		
+		
+		
+		return "Reservas:" + getEstado().getClass().getSimpleName();
+		//"Dormi: " + getHabitacion().getName();
 	}
 
 	//@Programmatic
