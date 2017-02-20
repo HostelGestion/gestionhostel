@@ -530,7 +530,7 @@ public class Reserva implements CalendarEventable {
 	
 	
     public enum E_canalVenta{
-    	Booking, Despegar;
+    	Booking, Despegar, Booking1, Webpage, Telefono, indoor;
     }
 
 
