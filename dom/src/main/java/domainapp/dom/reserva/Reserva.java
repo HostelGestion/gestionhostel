@@ -190,7 +190,7 @@ public class Reserva implements CalendarEventable {
     @Column(allowsNull = "false")
 	@Persistent(extensions= {
 			@Extension(vendorName = "datanucleous", key = "mapping-strategy",
-			value = "per-implementation"),
+			value = "per-implementatiohiden"),
 			@Extension(vendorName = "datanucleus", key = "implementation-clases", value = 
 			"domainapp.dom.reserva.estado.Disponible"
 			+ ",domainapp.dom.reserva.estado.Solicitada"
@@ -359,6 +359,7 @@ public class Reserva implements CalendarEventable {
 		final String ocultarConfirmar= this.getEstado().getClass().getSimpleName();
 		if (ocultarConfirmar.equals("Ocupada") ||
 				ocultarConfirmar.equals("Liberada") ||
+				ocultarConfirmar.equals("Disponible") ||
 				ocultarConfirmar.equals("Confirmada"))
 		{  
 			
@@ -376,13 +377,19 @@ public class Reserva implements CalendarEventable {
 		return this;
 	}
 	
+
+	
+	
 	public boolean hideCheckin()
 	{
 		final String ocultarCheckin= this.getEstado().getClass().getSimpleName();
+		//final LocalDate ocultarCheckinAF= LocalDate.now();
 		if (ocultarCheckin.equals("Checkin") ||
-				ocultarCheckin.equals("Solicitada") ||
+				
 				ocultarCheckin.equals("Liberada") ||
+				ocultarCheckin.equals("Disponible") ||
 				ocultarCheckin.equals("Ocupada"))
+				// ||ocultarCheckinAF.isAfter(this.fechaIn))
 		{  
 			
 			return true;
@@ -403,7 +410,8 @@ public class Reserva implements CalendarEventable {
 	{
 		final String ocultarCheckout= this.getEstado().getClass().getSimpleName();
 		if (ocultarCheckout.equals("Checkin") ||
-				
+				ocultarCheckout.equals("Disponible") ||
+				ocultarCheckout.equals("Confirmada") ||
 				ocultarCheckout.equals("Liberada"))
 		{  
 			
