@@ -20,6 +20,12 @@ package domainapp.dom.reserva;
 
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
+
+import java.math.BigDecimal;
+
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
+
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import javax.inject.Inject;
@@ -42,6 +48,7 @@ import org.apache.isis.applib.value.Blob;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import domainapp.dom.habitacion.Habitacion;
@@ -293,7 +300,19 @@ public class Reserva implements CalendarEventable {
         this.numHues = numHues;
     }
 
+    @Property()
+    @javax.jdo.annotations.Column(allowsNull="false")
+    private int estadia;
+    public int getEstadia() {
+    	estadia = Days.daysBetween(fechaIn, fechaSal).getDays();
+        return estadia;
+    }
+   
 
+    public void setEstadia(final int estadia) {
+        this.estadia = estadia;
+    }
+    
     @Property()
     @javax.jdo.annotations.Column(allowsNull="false")
     private Habitacion habitacion;
@@ -316,6 +335,20 @@ public class Reserva implements CalendarEventable {
     }
     public void setCanalVenta(String canalVenta) {
     	this.canalVenta = canalVenta;
+    }
+    
+    @Property()
+    @javax.jdo.annotations.Column(allowsNull="true")
+    private BigDecimal consumo;
+    private int consumoInt;
+    
+    public BigDecimal getConsumo() {
+    	consumoInt = this.habitacion.getTipodeHabitacion().getPrecio() * estadia;
+    	BigDecimal consumo = new BigDecimal(consumoInt);
+    	return consumo; 
+    }
+    public void setConsumo(BigDecimal consumo) {
+    	this.consumo = consumo;
     }
     
     

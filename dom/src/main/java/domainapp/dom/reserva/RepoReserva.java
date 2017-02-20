@@ -45,7 +45,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.assertj.core.util.Lists;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+
 import org.joda.time.ReadableInstant;
 
 
@@ -68,7 +68,9 @@ import java.time.temporal.ChronoUnit;
 public class RepoReserva {
 	*/
 	
+import java.math.BigDecimal;
 import java.sql.Date;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -80,6 +82,7 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.MinLength;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -156,7 +159,9 @@ public class RepoReserva {
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta,
-    		@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
+    		@ParameterLayout(named="Consumo ARS")@Parameter(optionality = Optionality.OPTIONAL) BigDecimal consumo
+
+    		//@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
     			
 
     		)
@@ -169,6 +174,7 @@ public class RepoReserva {
     	mireserva.setHabitacion(habitacion);
     	mireserva.setNumHues(numHues);
     	mireserva.setCanalVenta(canalVenta);
+    	mireserva.setConsumo(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * 6));
     	repositorio.persist(mireserva);
     	return mireserva;
     }
@@ -184,8 +190,9 @@ public class RepoReserva {
     		final Habitacion habitacion,
     		final int numHues,
     	
-    		final String canalVenta){
-    	
+    		final String canalVenta,
+    		final BigDecimal consumo) {
+    
     	if (fechaIn.isBefore(LocalDate.now()))
     		{return "Corregir la fecha inicial.";}
     	if (fechaSal.isBefore(fechaIn))
@@ -214,13 +221,15 @@ public class RepoReserva {
          return Arrays.asList(1,2,3,4,5,6,7,8,9,10);
      }
      
+
+     
      public List<String> choices5CrearReserva() {
          return Arrays.asList("Despegar","Avantrip");
          
      }
 
-    //@javax.inject.Inject
-    //RepositoryService repositoryService;
+     
+    
     
     @javax.inject.Inject
     private Huespedes huespedes;
