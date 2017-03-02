@@ -68,7 +68,6 @@ import java.time.temporal.ChronoUnit;
         nature = NatureOfService.VIEW,
         repositoryFor = Reserva.class
 )
-@DomainServiceLayout(
         menuOrder = "1"
 )
 public class RepoReserva {
@@ -76,7 +75,7 @@ public class RepoReserva {
 	
 import java.math.BigDecimal;
 import java.sql.Date;
-
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -100,6 +99,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 import domainapp.dom.habitacion.Habitacion;
@@ -156,8 +156,11 @@ public class RepoReserva {
     @ActionLayout(
             cssClassFa = "fa fa-thumbs-up"
     )
+    
+    	
         @Action(semantics = SemanticsOf.SAFE)
         @MemberOrder(sequence = "20")
+    
     public Reserva crearReserva(final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
@@ -165,7 +168,7 @@ public class RepoReserva {
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta,
-    		@ParameterLayout(named="Consumo ARS")@Parameter(optionality = Optionality.OPTIONAL) BigDecimal consumo
+    		@ParameterLayout(named="Consumo ARS")@Parameter(optionality = Optionality.OPTIONAL) BigDecimal gasto
 
     		//@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
     			
@@ -173,6 +176,7 @@ public class RepoReserva {
     		)
  {
     	//final Reserva mireserva = repositorio.instantiate(Reserva.class);
+    	//long estadia = fechaIn.until(fechaSal, ChronoUnit.DAYS);
     	Reserva mireserva = repositorio.instantiate(Reserva.class);
     	mireserva.setHuesped(huesped);
     	mireserva.setFechaIn(fechaIn);
@@ -180,7 +184,9 @@ public class RepoReserva {
     	mireserva.setHabitacion(habitacion);
     	mireserva.setNumHues(numHues);
     	mireserva.setCanalVenta(canalVenta);
-    	mireserva.setConsumo(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * 6));
+    	//mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * 6));
+    	mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * Days.daysBetween(fechaIn, fechaSal).getDays() * numHues));
+    	
     	repositorio.persist(mireserva);
     	return mireserva;
     }
