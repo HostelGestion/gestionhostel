@@ -78,37 +78,18 @@ import org.joda.time.LocalDate;
                         + "FROM domainapp.dom.Caja "
                         + "WHERE name.indexOf(:name) >= 0 ")
 })
-@javax.jdo.annotations.Unique(name="Caja_name_UNQ", members = {"name"})
-@DomainObject
+
 public class Caja implements Comparable<Caja> {
 
     public static final int NAME_LENGTH = 40;
 
 
-    public TranslatableString title() {
-        return TranslatableString.tr("Object: {name}", "name", getName());
+    public String title() {
+        return "Pagos";
     }
 
 
-    public static class NameDomainEvent extends PropertyDomainEvent<Caja,String> {}
-    @javax.jdo.annotations.Column(
-            allowsNull="false",
-            length = NAME_LENGTH
-    )
-    @Property(
-        domainEvent = NameDomainEvent.class
-    )
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    public TranslatableString validateName(final String name) {
-        return name != null && name.contains("!")? TranslatableString.tr("Exclamation mark is not allowed"): null;
-    }
+    
     
     private Huesped huesped;
     @javax.jdo.annotations.Column(allowsNull="false")
@@ -129,7 +110,6 @@ public class Caja implements Comparable<Caja> {
         this.monto = monto;
     }
     
-   /* private
     private String concepto;
     @javax.jdo.annotations.Column(allowsNull="false")
     public String getConcepto() {
@@ -137,21 +117,19 @@ public class Caja implements Comparable<Caja> {
     }
     public void setConcepto(final String concepto) {
         this.concepto = concepto;
-    }*/
+    }
+    
+
     
     @MemberOrder(sequence = "2")
 	@Column(allowsNull="false")
-	@Property(domainEvent = NameDomainEvent.class)
+
 	@PropertyLayout(named="Fecha de Pago")
 	private LocalDate fechaDePago;
 	public LocalDate getFechaDePago() {return fechaDePago;}
 	public void setFechaDePago(LocalDate fechaDePago) {this.fechaDePago = fechaDePago;}
 
-    public static class DeleteDomainEvent extends ActionDomainEvent<Caja> {}
-    @Action(
-            domainEvent = DeleteDomainEvent.class,
-            semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE
-    )
+
     @ActionLayout(named="Eliminar Ingreso")
     public void delete() {
         repositoryService.remove(this);

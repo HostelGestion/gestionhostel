@@ -115,36 +115,31 @@ public class RepoCaja {
     )
     @MemberOrder(sequence = "3")
     public Caja crearMovimiento(
-            final @ParameterLayout(named="Name") String name,
+            
             final @ParameterLayout(named="Huésped") Huesped huesped,
             final @ParameterLayout(named="Monto (ARS)") Double monto,
-            final @ParameterLayout(named="Concepto") String concepto,
-            final @ParameterLayout(named="Fecha de Pago") LocalDate fechaDePago
+            final @ParameterLayout(named="Concepto") String concepto
     		) {
         final Caja obj = repositoryService.instantiate(Caja.class);
-        obj.setName(name);
+        
         obj.setHuesped(huesped);
         obj.setMonto(monto);
-     //   obj.setConcepto(concepto);
+        obj.setConcepto(concepto);
         repositoryService.persist(obj);
        
-        obj.setFechaDePago(fechaDePago);
+        obj.setFechaDePago(LocalDate.now());
         return obj;
     }
     
     
- // Autocompleta el Huésped a partir de su email:
-/*    @Programmatic
-    public Collection<Huesped> autoComplete1crearMovimiento(final @MinLength(2) String email) {
-        return huespedes.findByEmail(email);
-    }*/
+ 
     @Programmatic
-    public List<Huesped> choices1CrearMovimiento() {
+    public List<Huesped> choices0CrearMovimiento() {
         
         return huespedes.listAll();
    	}
 
-    public Collection<String> choices3CrearMovimiento() {
+    public Collection<String> choices2CrearMovimiento() {
         return Arrays.asList("Pago de Estadía", "Adicional");
     }
     //endregion

@@ -345,16 +345,15 @@ public class Reserva implements CalendarEventable {
     
     @Property()
     @javax.jdo.annotations.Column(allowsNull="true")
-    private BigDecimal consumo;
-    private int consumoInt;
+    private BigDecimal gasto;
     
-    public BigDecimal getConsumo() {
-    	consumoInt = this.habitacion.getTipodeHabitacion().getPrecio() * estadia;
-    	BigDecimal consumo = new BigDecimal(consumoInt);
-    	return consumo; 
+    
+    public BigDecimal getGasto() {
+    	
+    	return gasto; 
     }
-    public void setConsumo(BigDecimal consumo) {
-    	this.consumo = consumo;
+    public void setGasto(BigDecimal gasto) {
+    	this.gasto = gasto;
     }
     
     
@@ -470,28 +469,23 @@ public class Reserva implements CalendarEventable {
 	@Override
 	public String getCalendarName() {
 		
+		return "Reserva:" + getEstado().getClass().getSimpleName();
 		
-		
-		
-		return "Reservas:" + getEstado().getClass().getSimpleName();
-		//"Dormi: " + getHabitacion().getName();
 	}
 
-	//@Programmatic
-	//@Override
+	
 	public CalendarEvent toCalendarEvent() {
 		
 		return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
-		//return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), "");
+		
 
 	}
 	
 	
-	//@Programmatic
+	
     public String getNotes() {
     	
-    	 //return getNumHues() + " cama/s, " + huesped.getName() + " @ dormi " + getHabitacion().getName();
-    	 return " Cama/s: " + getNumHues() + " @ dormi " + getHabitacion().getName() + ", " + getHuesped().getName() + ".";
+    	 return getNumHues() + " cama/s," +  " @ dormi " + getHabitacion().getName() + ", " + getHuesped().getName() + ".";
 
     }
     /*
