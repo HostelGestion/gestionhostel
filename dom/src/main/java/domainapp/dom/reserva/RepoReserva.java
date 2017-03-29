@@ -167,7 +167,7 @@ public class RepoReserva {
             @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
-
+    		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta
 
     		//@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
     			
