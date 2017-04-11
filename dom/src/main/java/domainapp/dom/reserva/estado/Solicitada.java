@@ -56,7 +56,8 @@ public class Solicitada implements IEstadoReserva{
 	
 	@Override
 	public void reservar() {
-		// TODO Auto-generated method stub
+		this.reserva.setEstado(this.reserva.getEstadoSolicitada());
+
 		
 	}
 

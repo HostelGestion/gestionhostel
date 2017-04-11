@@ -106,7 +106,8 @@ import domainapp.dom.habitacion.Habitacion;
 import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
-
+import domainapp.dom.reserva.estado.Solicitada;
+import domainapp.dom.reserva.estado.Solicitada;
 
 
 @DomainService(
@@ -168,14 +169,12 @@ public class RepoReserva {
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
     		@ParameterLayout(named="Huéspedes?") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta
-
-    		//@ParameterLayout(named="Estado")@Parameter(optionality = Optionality.OPTIONAL) String estado
+    		
     			
 
     		)
  {
-    	//final Reserva mireserva = repositorio.instantiate(Reserva.class);
-    	//long estadia = fechaIn.until(fechaSal, ChronoUnit.DAYS);
+    	
     	Reserva mireserva = repositorio.instantiate(Reserva.class);
     	mireserva.setHuesped(huesped);
     	mireserva.setFechaIn(fechaIn);
@@ -183,9 +182,9 @@ public class RepoReserva {
     	mireserva.setHabitacion(habitacion);
     	mireserva.setNumHues(numHues);
     	mireserva.setCanalVenta(canalVenta);
-    	//mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * 6));
     	mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * Days.daysBetween(fechaIn, fechaSal).getDays() * numHues));
     	
+    	mireserva.getEstado().reservar();
     	repositorio.persist(mireserva);
     	return mireserva;
     }
