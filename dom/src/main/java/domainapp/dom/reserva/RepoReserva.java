@@ -23,55 +23,7 @@
  *  under the License.
  */
 package domainapp.dom.reserva;
-/*
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.regex.Pattern;
 
-import org.apache.isis.applib.Identifier;
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.MemberOrder;
-import org.apache.isis.applib.annotation.MinLength;
-import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
-import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.query.QueryDefault;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
-import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.apache.isis.applib.services.repository.RepositoryService;
-import org.assertj.core.util.Lists;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
-import org.joda.time.DateTime;
-
-import org.joda.time.ReadableInstant;
-
-
-import domainapp.dom.habitacion.Habitacion;
-import domainapp.dom.habitacion.Habitaciones;
-import domainapp.dom.huesped.Huesped;
-import domainapp.dom.huesped.Huespedes;
-import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.tipodehabitacion.TipodeHabitacion;
-import java.time.temporal.ChronoUnit;
-
-
-@DomainService(
-        nature = NatureOfService.VIEW,
-        repositoryFor = Reserva.class
-)
-        menuOrder = "1"
-)
-public class RepoReserva {
-	*/
 	
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -107,6 +59,7 @@ import domainapp.dom.habitacion.Habitaciones;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.reserva.estado.Solicitada;
+import domainapp.dom.tipodehabitacion.TipodeHabitacion;
 import domainapp.dom.reserva.estado.Solicitada;
 
 
@@ -142,17 +95,22 @@ public class RepoReserva {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<Reserva> buscarPorNombre(
-            @ParameterLayout(named="Name")
-            final String name
+    public List<Reserva> buscarPorHuesped(
+            @ParameterLayout(named="Huesped:")
+            final Huesped huesped
+            
     ) {
         return repositorio.allMatches(
                 new QueryDefault<>(
                         Reserva.class,
-                        "findByName",
-                        "name", name));
+                        "findByHuesped",
+                        "huesped", huesped));
     }
-
+    
+    @Programmatic
+    public List<Huesped> choices0BuscarPorHuesped() {
+        return huespedes.listarHuespedes();
+   	}
     
     @ActionLayout(
             cssClassFa = "fa fa-thumbs-up"

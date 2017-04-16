@@ -86,21 +86,15 @@ import domainapp.dom.reserva.estado.Solicitada;
 	@javax.jdo.annotations.Query(
             name = "listarTodas", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.reserva.Reserva ")
+                    + "FROM domainapp.dom.reserva.Reserva "),
     
-    /*
+    
     @javax.jdo.annotations.Query(
-            name = "findByName", language = "JDOQL",
+            name = "findByHuesped", language = "JDOQL",
             value = "SELECT "
                     + "FROM domainapp.dom.reserva.Reserva "
-                    + "WHERE name.indexOf(:name) >= 0 "),
-    		@javax.jdo.annotations.Query(
-        	
-            name = "findByEmail", language = "JDOQL",
-            value = "SELECT "
-                    + "FROM domainapp.dom.huesped.Huesped "
-                    + "WHERE name.indexOf(:email) >= 0 ")
-                    */
+                    + "WHERE huesped ==:huesped")
+            
     
 })
 
