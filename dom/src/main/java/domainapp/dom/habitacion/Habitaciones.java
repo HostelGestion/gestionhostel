@@ -50,7 +50,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.huesped.Huespedes;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion;
-import domainapp.dom.tipodehabitacion.TipodeHabitaciones;
+import domainapp.dom.tipodehabitacion.RepoTipodeHabitacion;
 
 
 @DomainService(
@@ -78,7 +78,7 @@ public class Habitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Habitacion> listAll() {
+    public List<Habitacion> listarHabitaciones() {
         return repositoryService.allInstances(Habitacion.class);
     }
     //endregion
@@ -91,7 +91,7 @@ public class Habitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<Habitacion> findByName(
+    public List<Habitacion> buscarPorNombre(
             @ParameterLayout(named="Name")
             final String name
     ) {
@@ -127,7 +127,7 @@ public class Habitaciones {
     
     @Programmatic
     public List<TipodeHabitacion> choices1CrearHabitacion() {
-        return tipodeHabitaciones.listAll();
+        return repoTipodeHabitacion.listarTiposDeHabitaciones();
    	}
     //endregion
 
@@ -137,7 +137,7 @@ public class Habitaciones {
     RepositoryService repositoryService;
     
     @javax.inject.Inject
-    private TipodeHabitaciones tipodeHabitaciones;
+    private RepoTipodeHabitacion repoTipodeHabitacion;
 
     //endregion
 }

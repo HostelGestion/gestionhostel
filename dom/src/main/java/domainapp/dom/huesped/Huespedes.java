@@ -65,7 +65,7 @@ public class Huespedes {
     }
     //endregion
 
-    //region > listAll (action)
+    //region > listarHuespedes (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -73,7 +73,7 @@ public class Huespedes {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Huesped> listAll() {
+    public List<Huesped> listarHuespedes() {
         return repositoryService.allInstances(Huesped.class);
         
     }
@@ -84,7 +84,7 @@ public class Huespedes {
     
 
 
-    //region > findByName (action)
+    //region > buscarPorNombre (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -92,7 +92,7 @@ public class Huespedes {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<Huesped> findByName(
+    public List<Huesped> buscarPorNombre(
             @ParameterLayout(named="Name")
             final String name
     ) {
@@ -106,7 +106,7 @@ public class Huespedes {
     
     //endregion
     
-    public List<Huesped> findByEmail(
+    public List<Huesped> buscarPorEmail(
             @ParameterLayout(named="Email")
             final String email
     ) {

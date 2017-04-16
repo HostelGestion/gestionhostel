@@ -218,13 +218,13 @@ public class RepoReserva {
     
     // Autocompleta el Huésped a partir de su email:
     public Collection<Huesped> autoComplete0CrearReserva(final @MinLength(2) String email) {
-        return huespedes.findByEmail(email);
+        return huespedes.buscarPorEmail(email);
     }
 
     // Lista las habitaciones creadas en la clase correspondiente:    
      public List<Habitacion> choices3CrearReserva() {
      
-        return habitaciones.listAll();
+        return habitaciones.listarHabitaciones();
    	}	
     
      public Collection<Integer> choices4CrearReserva() {

@@ -70,7 +70,7 @@ public class RepoCaja {
     }
     //endregion
 
-    //region > listAll (action)
+    //region > listarCompras (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -78,12 +78,12 @@ public class RepoCaja {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<Caja> listAll() {
+    public List<Caja> listarCompras() {
         return repositoryService.allInstances(Caja.class);
     }
     //endregion
 
-    //region > findByName (action)
+    //region > buscarPorNombre (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -91,7 +91,7 @@ public class RepoCaja {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "2")
-    public List<Caja> findByName(
+    public List<Caja> buscarPorNombre(
             @ParameterLayout(named="Name")
             final String name
     ) {
@@ -103,7 +103,7 @@ public class RepoCaja {
     }
     //endregion
 
-    //region > create (action)
+    //region > registrarCompra (action)
     public static class CreateDomainEvent extends ActionDomainEvent<RepoCaja> {
         public CreateDomainEvent(final RepoCaja source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
@@ -114,7 +114,7 @@ public class RepoCaja {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public Caja crearMovimiento(
+    public Caja registrarCompra(
             
             final @ParameterLayout(named="Huésped") Huesped huesped,
             final @ParameterLayout(named="Monto (ARS)") Double monto,
@@ -134,12 +134,12 @@ public class RepoCaja {
     
  
     @Programmatic
-    public List<Huesped> choices0CrearMovimiento() {
+    public List<Huesped> choices0RegistrarCompra() {
         
-        return huespedes.listAll();
+        return huespedes.listarHuespedes();
    	}
 
-    public Collection<String> choices2CrearMovimiento() {
+    public Collection<String> choices2RegistrarCompra() {
         return Arrays.asList("Pago de Estadía", "Adicional");
     }
     //endregion

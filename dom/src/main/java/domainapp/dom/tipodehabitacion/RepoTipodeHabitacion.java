@@ -62,7 +62,7 @@ import domainapp.dom.simple.TipodeHabitacion.Etipodesexo;
         menuOrder = "10",
         named="Habitaciones"
 )
-public class TipodeHabitaciones {
+public class RepoTipodeHabitacion {
 
     //region > title
     public TranslatableString title() {
@@ -78,7 +78,7 @@ public class TipodeHabitaciones {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<TipodeHabitacion> listAll() {
+    public List<TipodeHabitacion> listarTiposDeHabitaciones() {
         return repositoryService.allInstances(TipodeHabitacion.class);
     }
     //endregion
@@ -90,8 +90,8 @@ public class TipodeHabitaciones {
     
     
     //region > create (action)
-    public static class CreateDomainEvent extends ActionDomainEvent<TipodeHabitaciones> {
-        public CreateDomainEvent(final TipodeHabitaciones source, final Identifier identifier, final Object... arguments) {
+    public static class CreateDomainEvent extends ActionDomainEvent<RepoTipodeHabitacion> {
+        public CreateDomainEvent(final RepoTipodeHabitacion source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
         }
     }

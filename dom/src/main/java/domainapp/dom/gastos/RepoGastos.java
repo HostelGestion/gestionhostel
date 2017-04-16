@@ -70,7 +70,7 @@ public class RepoGastos {
     }
     //endregion
 
-    //region > listAll (action)
+    //region > listarGastos (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
@@ -78,7 +78,7 @@ public class RepoGastos {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
-    public List<gastos> listAll() {
+    public List<gastos> listarGastos() {
         return repositoryService.allInstances(gastos.class);
       //  return repositoryService.Version(Version.class);
         //return Time.DAY.allInstances(java.sql.Time.class);
