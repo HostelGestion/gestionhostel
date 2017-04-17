@@ -479,7 +479,7 @@ public class Reserva implements CalendarEventable {
 	
     public String getNotes() {
     	
-    	 return getNumHues() + " cama/s," +  " @ dormi " + getHabitacion().getName() + ", " + getHuesped().getName() + ".";
+    	 return getNumHues() + " cama/s," +  " @ dormi " + getHabitacion().getName() + ", " + getEstadia() + " N.";
 
     }
     /*
