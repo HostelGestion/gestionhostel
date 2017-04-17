@@ -116,13 +116,13 @@ public class RepoCaja {
     @MemberOrder(sequence = "3")
     public Caja registrarCompra(
             
-            final @ParameterLayout(named="Huésped") Huesped huesped,
+            final @ParameterLayout(named="Reserva") Reserva reserva,
             final @ParameterLayout(named="Monto (ARS)") Double monto,
             final @ParameterLayout(named="Concepto") String concepto
     		) {
         final Caja obj = repositoryService.instantiate(Caja.class);
         
-        obj.setHuesped(huesped);
+        obj.setReserva(reserva);
         obj.setMonto(monto);
         obj.setConcepto(concepto);
         repositoryService.persist(obj);
@@ -134,9 +134,9 @@ public class RepoCaja {
     
  
     @Programmatic
-    public List<Huesped> choices0RegistrarCompra() {
+    public List<Reserva> choices0RegistrarCompra() {
         
-        return huespedes.listarHuespedes();
+        return repoReserva.listarReservas();
    	}
 
     public Collection<String> choices2RegistrarCompra() {
@@ -150,6 +150,6 @@ public class RepoCaja {
     RepositoryService repositoryService;
 
     @javax.inject.Inject
-    private Huespedes huespedes;
+    private RepoReserva repoReserva;
     //endregion
 }

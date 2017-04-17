@@ -51,6 +51,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import domainapp.dom.huesped.Huesped;
 import domainapp.dom.reportes.GenerarReporte;
 import domainapp.dom.reportes.TicketReporte;
+import domainapp.dom.reserva.Reserva;
 import domainapp.dom.caja.RepoCaja;
 import net.sf.jasperreports.engine.JRException;
 import org.joda.time.LocalDate;
@@ -91,14 +92,14 @@ public class Caja implements Comparable<Caja> {
 
     
     
-    private Huesped huesped;
+    private Reserva reserva;
     @javax.jdo.annotations.Column(allowsNull="false")
-    public Huesped getHuesped() {
-        return huesped;
+    public Reserva getReserva() {
+        return reserva;
     }
     @javax.jdo.annotations.Column(allowsNull="false")
-    public void setHuesped(final Huesped huesped) {
-        this.huesped = huesped;
+    public void setReserva(final Reserva reserva) {
+        this.reserva = reserva;
     }
 
     private Double monto;
