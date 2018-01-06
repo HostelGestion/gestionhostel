@@ -150,9 +150,16 @@ public class RepoReserva {
     // Fin de Region Crear Reserva.
     
     //Región validar Reserva
+    
+    public String validate1CrearReserva(final LocalDate fechaIn)
+    {if (fechaIn.isBefore(LocalDate.now()));
+    	return "Corregir la fecha inicial...";}
+    
+    
+    
     @Programmatic
     public String validateCrearReserva(
-    		final Huesped huesped,
+    		
     		final LocalDate fechaIn,
     		final LocalDate fechaSal,
     		final Habitacion habitacion,
@@ -161,8 +168,7 @@ public class RepoReserva {
     		final String canalVenta,
     		final BigDecimal consumo) {
     
-    	if (fechaIn.isBefore(LocalDate.now()))
-    		{return "Corregir la fecha inicial.";}
+    	
     	if (fechaSal.isBefore(fechaIn))
     		{return "Corregir la fecha de salida.";}
     	if (numHues > habitacion.getTipodeHabitacion().getCamas())
