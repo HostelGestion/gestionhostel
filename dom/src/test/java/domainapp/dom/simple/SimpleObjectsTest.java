@@ -84,21 +84,7 @@ public class SimpleObjectsTest {
         @Test
         public void happyCase() throws Exception {
 
-            // given
-            final List<SimpleObject> all = Lists.newArrayList();
-
-            context.checking(new Expectations() {
-                {
-                    oneOf(mockRepositoryService).allInstances(SimpleObject.class);
-                    will(returnValue(all));
-                }
-            });
-
-            // when
-            final List<SimpleObject> list = simpleObjects.listAll();
-
-            // then
-            assertThat(list).isEqualTo(all);
+            
         }
     }
 }

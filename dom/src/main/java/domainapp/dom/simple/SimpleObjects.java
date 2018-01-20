@@ -26,9 +26,11 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.Hidden;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
@@ -40,13 +42,14 @@ import org.apache.isis.applib.services.repository.RepositoryService;
         repositoryFor = SimpleObject.class
 )
 @DomainServiceLayout(
+		named="Ayuda",
         menuOrder = "10"
 )
 public class SimpleObjects {
 
     //region > title
     public TranslatableString title() {
-        return TranslatableString.tr("Simple Objects");
+        return TranslatableString.tr("Ayuda");
     }
     //endregion
 
@@ -63,25 +66,7 @@ public class SimpleObjects {
     }
     //endregion
 
-    //region > findByName (action)
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            bookmarking = BookmarkPolicy.AS_ROOT
-    )
-    @MemberOrder(sequence = "2")
-    public List<SimpleObject> findByName(
-            @ParameterLayout(named="Name")
-            final String name
-    ) {
-        return repositoryService.allMatches(
-                new QueryDefault<>(
-                        SimpleObject.class,
-                        "findByName",
-                        "name", name));
-    }
-    //endregion
+    
 
     //region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjects> {
@@ -90,10 +75,12 @@ public class SimpleObjects {
         }
     }
 
-    @Action(
+    
+	@Action(
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
+	@Programmatic
     public SimpleObject create(
             final @ParameterLayout(named="Name") String name) {
         final SimpleObject obj = repositoryService.instantiate(SimpleObject.class);
