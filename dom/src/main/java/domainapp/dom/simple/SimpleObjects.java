@@ -18,7 +18,11 @@
  */
 package domainapp.dom.simple;
 
+import java.net.MalformedURLException;
 import java.util.List;
+
+import javax.jdo.annotations.Column;
+import javax.jdo.annotations.Persistent;
 
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.annotation.Action;
@@ -27,15 +31,20 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.Hidden;
+import org.apache.isis.applib.annotation.LabelPosition;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.value.Blob;
 
 @DomainService(
         nature = NatureOfService.VIEW,
@@ -61,14 +70,46 @@ public class SimpleObjects {
             bookmarking = BookmarkPolicy.AS_ROOT
     )
     @MemberOrder(sequence = "1")
+    @Programmatic
     public List<SimpleObject> listAll() {
         return repositoryService.allInstances(SimpleObject.class);
     }
     //endregion
+    
+    
+    
+    	
 
     
+    
+    
 
-    //region > create (action)
+    @Action(semantics=SemanticsOf.SAFE)
+    @MemberOrder(name="Ayuda", sequence="1")
+    public java.net.URL verAyuda() throws MalformedURLException {
+        return new java.net.URL(getLink());
+    }
+    
+    
+    
+    
+    
+    
+    
+
+    private String getLink() {
+		// TODO Auto-generated method stub
+		return "http://www.google.com";
+	}
+
+
+
+
+
+
+
+
+	//region > create (action)
     public static class CreateDomainEvent extends ActionDomainEvent<SimpleObjects> {
         public CreateDomainEvent(final SimpleObjects source, final Identifier identifier, final Object... arguments) {
             super(source, identifier, arguments);
@@ -78,7 +119,7 @@ public class SimpleObjects {
     
 	@Action(
             domainEvent = CreateDomainEvent.class
-    )
+    )	
     @MemberOrder(sequence = "3")
 	@Programmatic
     public SimpleObject create(
