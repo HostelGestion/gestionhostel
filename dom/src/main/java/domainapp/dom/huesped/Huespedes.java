@@ -129,7 +129,7 @@ public class Huespedes {
             domainEvent = CreateDomainEvent.class
     )
     @MemberOrder(sequence = "3")
-    public Huesped create(
+    public Huesped cargarHuesped(
             final
             @ParameterLayout(named="Nombre")String name, 
     		@ParameterLayout(named="Teléfono")String numTel,
