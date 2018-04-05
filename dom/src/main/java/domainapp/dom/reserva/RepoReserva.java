@@ -152,25 +152,28 @@ public class RepoReserva {
     //Región validar Reserva
     
     public String validate1CrearReserva(final LocalDate fechaIn)
-    {if (fechaIn.isBefore(LocalDate.now()));
+    {if (fechaIn.isBefore(LocalDate.now())){
     	return "Corregir la fecha inicial...";}
-    
+    if (fechaIn.isAfter(LocalDate.now())){
+    	return "";
+    }
+    else
+    	{return "";}}
+
+    	
     
     
     @Programmatic
     public String validateCrearReserva(
     		
-    		final LocalDate fechaIn,
-    		final LocalDate fechaSal,
+    		
     		final Habitacion habitacion,
     		final int numHues,
-    	
     		final String canalVenta,
     		final BigDecimal consumo) {
     
     	
-    	if (fechaSal.isBefore(fechaIn))
-    		{return "Corregir la fecha de salida.";}
+    	
     	if (numHues > habitacion.getTipodeHabitacion().getCamas())
     		{return "La habitación no admite ese número de huéspedes.";}
    
