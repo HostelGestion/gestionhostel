@@ -160,8 +160,16 @@ public class RepoReserva {
     else
     	{return "";}}
 
-    	
     
+    public String validate2CrearReserva(final LocalDate fechaIn, final LocalDate fechaSal)
+    {if (fechaIn.isBefore(fechaSal)){
+    	return "Corregir la fecha inicial...";}
+    if (fechaIn.isAfter(fechaSal)){
+    	return "";
+    }
+    else
+    	{return "";}}
+   
     
     @Programmatic
     public String validateCrearReserva(
