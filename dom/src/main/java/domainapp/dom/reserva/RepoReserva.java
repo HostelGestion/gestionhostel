@@ -31,6 +31,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -123,10 +124,15 @@ public class RepoReserva {
     public Reserva crearReserva(final
             @ParameterLayout(named="Huesped (ingrese email del titular)") Huesped huesped,
             @ParameterLayout(named="Fecha llegada") LocalDate fechaIn,
-            @ParameterLayout(named="Fecha salida") LocalDate fechaSal,
+            @Parameter(
+                    regexPattern = "^[1-9][0-9]*$",
+                    regexPatternReplacement = "Ingrese un número de noches correcto."   
+                )
+            @ParameterLayout(named="Estadia (# noches)") int estadia,
     		@ParameterLayout(named="Habitación") Habitacion habitacion,
-    		@ParameterLayout(named="Huéspedes?") int numHues,
+    		@ParameterLayout(named="Huéspedes") int numHues,
     		@ParameterLayout(named="Canal de venta")@Parameter(optionality = Optionality.MANDATORY) String canalVenta
+    		
     		
     			
 
@@ -136,11 +142,13 @@ public class RepoReserva {
     	Reserva mireserva = repositorio.instantiate(Reserva.class);
     	mireserva.setHuesped(huesped);
     	mireserva.setFechaIn(fechaIn);
-    	mireserva.setFechaSal(fechaSal);
+    	mireserva.setFechaSal(new LocalDate(fechaIn.plusDays(estadia)));
+    	mireserva.setEstadia(estadia);
     	mireserva.setHabitacion(habitacion);
     	mireserva.setNumHues(numHues);
     	mireserva.setCanalVenta(canalVenta);
-    	mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * Days.daysBetween(fechaIn, fechaSal).getDays() * numHues));
+    	mireserva.setGasto(new BigDecimal(habitacion.getTipodeHabitacion().getPrecio() * estadia * numHues));
+    	
     	
     	mireserva.getEstado().reservar();
     	repositorio.persist(mireserva);
@@ -161,33 +169,22 @@ public class RepoReserva {
     	{return "";}}
 
     
-    public String validate2CrearReserva(final LocalDate fechaIn, final LocalDate fechaSal)
-    {if (fechaIn.isBefore(fechaSal)){
-    	return "Corregir la fecha inicial...";}
-    if (fechaIn.isAfter(fechaSal)){
-    	return "";
-    }
-    else
-    	{return "";}}
-   
     
+   
     @Programmatic
     public String validateCrearReserva(
-    		
-    		
-    		final Habitacion habitacion,
-    		final int numHues,
-    		final String canalVenta,
-    		final BigDecimal consumo) {
-    
-    	
-    	
-    	if (numHues > habitacion.getTipodeHabitacion().getCamas())
-    		{return "La habitación no admite ese número de huéspedes.";}
-   
-    
-    return "";
+    	final Habitacion habitacion,
+		final int numHues,
+		final String canalVenta,
+		final BigDecimal consumo) {
+			if (numHues > habitacion.getTipodeHabitacion().getCamas()){
+    		return "La habitación no admite ese número de huéspedes.";}
+			return "";
     }
+    
+
+    
+
     
   //Fin región validar Reserva
     
@@ -203,13 +200,14 @@ public class RepoReserva {
    	}	
     
      public Collection<Integer> choices4CrearReserva() {
-         return Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+    	 return Arrays.asList(1,2,3,4,5,6,7,8);
+         
      }
      
 
      
      public List<String> choices5CrearReserva() {
-         return Arrays.asList("Despegar","Avantrip");
+         return Arrays.asList("Despegar","Avantrip", "AlMundo", "Otro");
          
      }
 

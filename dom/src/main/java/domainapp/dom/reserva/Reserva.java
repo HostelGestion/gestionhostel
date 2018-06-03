@@ -27,6 +27,7 @@ package domainapp.dom.reserva;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.Persistent;
 
+
 import java.math.BigDecimal;
 
 import java.time.Period;
@@ -302,13 +303,15 @@ public class Reserva implements CalendarEventable {
 
     @Property()
     @javax.jdo.annotations.Column(allowsNull="false")
+    
     private int estadia;
+    
     public int getEstadia() {
     	estadia = Days.daysBetween(fechaIn, fechaSal).getDays();
         return estadia;
     }
    
-
+ 
     public void setEstadia(final int estadia) {
         this.estadia = estadia;
     }
@@ -346,6 +349,7 @@ public class Reserva implements CalendarEventable {
     	
     	return gasto; 
     }
+   
     public void setGasto(BigDecimal gasto) {
     	this.gasto = gasto;
     }
