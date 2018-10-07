@@ -88,6 +88,11 @@ import domainapp.dom.reserva.estado.Solicitada;
             name = "listarTodas", language = "JDOQL",
             value = "SELECT "
                     + "FROM domainapp.dom.reserva.Reserva "),
+	@javax.jdo.annotations.Query(
+            name = "listarActuales", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM domainapp.dom.reserva.Reserva "
+            		+ "WHERE fechaSal > CURRENT_DATE()"),
     
     
     @javax.jdo.annotations.Query(

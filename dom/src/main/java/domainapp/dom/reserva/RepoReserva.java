@@ -76,7 +76,25 @@ public class RepoReserva {
 	
 	
 	
-    //region > listAll (action)
+    //region > listActuales (action)
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    @ActionLayout(
+            bookmarking = BookmarkPolicy.AS_ROOT
+    )
+    @MemberOrder(sequence = "5")
+    public List<Reserva> listarActuales() {
+        return repositorio.allMatches(new QueryDefault<>(
+        		Reserva.class,
+        		"listarActuales"));
+    	
+    	/* return repositorio.allInstances(new QueryDefault<>(
+        		Reserva.class,
+        		"listarActuales")); */
+    }
+    
+  //region > listAll (action)
     @Action(
             semantics = SemanticsOf.SAFE
     )
