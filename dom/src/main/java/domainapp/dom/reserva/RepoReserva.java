@@ -181,14 +181,20 @@ public class RepoReserva {
     {if (fechaIn.isBefore(LocalDate.now())){
     	return "Corregir la fecha inicial...";}
     if (fechaIn.isAfter(LocalDate.now())){
-    	return "";
-    }
+    	return "";}
     else
     	{return "";}}
 
     
+    @Programmatic
+    public String validate5CrearReserva(final int numHues, final Habitacion habitacion)
+    {if (numHues < habitacion.getTipodeHabitacion().getCamas().intValue()){
+    	return "La habitación no admite ese número de huéspedes.";}
+    else
+	{return "Uh";}
+}
     
-   
+/*   
     @Programmatic
     public String validateCrearReserva(
     	final Habitacion habitacion,
@@ -199,7 +205,7 @@ public class RepoReserva {
     		return "La habitación no admite ese número de huéspedes.";}
 			return "";
     }
-    
+    */
 
     
 

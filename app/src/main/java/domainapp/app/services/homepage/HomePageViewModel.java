@@ -49,15 +49,16 @@ public class HomePageViewModel {
 
     
 
-    //RECUPERAR
     
     //region > object (collection)
     @org.apache.isis.applib.annotation.HomePage
     public List<Reserva> getReservas() {
-        return repoReserva.listarReservas();
+        return repoReserva.listarActuales();
     }
  	
     
+    
+
     
 
     /*

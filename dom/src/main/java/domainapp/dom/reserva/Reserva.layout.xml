@@ -35,21 +35,18 @@
                                 
                                 <c:property id="huesped" namedEscaped="true"/>
                                 <c:property id="fechaIn" namedEscaped="true"/>
-                                <property id="estadia" hidden="ALL_TABLES"/>
                                 <c:property id="estadia" namedEscaped="true"/>
-                                <property id="gasto" hidden="ALL_TABLES"/>
+                                
                                 <c:property id="gasto" namedEscaped="true"/>
-                                <property id="fechaSal" hidden="ALL_TABLES"/>
+                                
                                 <c:property id="fechaSal" namedEscaped="true"/>
-                                <property id="habitacion" hidden="ALL_TABLES"/>
+                                
                                 <c:property id="habitacion" namedEscaped="true"/>
-                                <property id="canalVenta" hidden="ALL_TABLES"/>
+                                
                                 <c:property id="canalVenta" namedEscaped="true"/>
-                                <property id="numHues" hidden="ALL_TABLES"/>
+                                
                                 <c:property id="numHues" namedEscaped="true"/>
-                                <property id="calendarName" hidden="ALL_TABLES"/>
-                                <c:property id="calendarName" namedEscaped="true"/>
-                                <property id="nombreEstado" hidden="ALL_TABLES"/>
+
                                 <c:property id="nombreEstado" namedEscaped="true"/>
                             </c:fieldSet>
                         </bs3:col>

@@ -87,12 +87,13 @@ import domainapp.dom.reserva.estado.Solicitada;
 	@javax.jdo.annotations.Query(
             name = "listarTodas", language = "JDOQL",
             value = "SELECT "
-                    + "FROM domainapp.dom.reserva.Reserva "),
+                    + "FROM domainapp.dom.reserva.Reserva "
+                    + "import org.joda.time.LocalDate ORDER BY fechaSal ASC"),
 	@javax.jdo.annotations.Query(
             name = "listarActuales", language = "JDOQL",
             value = "SELECT "
                     + "FROM domainapp.dom.reserva.Reserva "
-            		+ "WHERE fechaSal > CURRENT_DATE()"),
+                    + "WHERE fechaSal > CURRENT_DATE()"),
     
     
     @javax.jdo.annotations.Query(
@@ -476,7 +477,7 @@ public class Reserva implements CalendarEventable {
 		
 	}
 
-	
+	@Programmatic
 	public CalendarEvent toCalendarEvent() {
 		
 		return new CalendarEvent(this.getFechaIn().toDateTimeAtStartOfDay(), getCalendarName(), getNotes());
