@@ -43,7 +43,15 @@ public class HomePageViewModel {
     //region > title
     public String title() {
     	
-        return getReservas().size() + " reservas";
+    	if (getReservas().size() < 1) {
+    		return "Cargue Húesped y Habitación para poder hacer su primer Reserva";
+    	}
+    	
+    	
+    	else
+    	{
+    	
+        return getReservas().size() + " reservas";}
     }
     //endregion
 
