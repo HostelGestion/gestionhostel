@@ -94,7 +94,11 @@ import domainapp.dom.reserva.estado.Solicitada;
             value = "SELECT "
                     + "FROM domainapp.dom.reserva.Reserva "
                     + "WHERE fechaSal > CURRENT_DATE()"),
-    
+	@javax.jdo.annotations.Query(
+            name = "cantidadReservas", language = "JDOQL",
+            value = "SELECT count(estadoDisponible) "
+                    + "FROM domainapp.dom.reserva.Reserva "
+                    ),
     
     @javax.jdo.annotations.Query(
             name = "findByHuesped", language = "JDOQL",
@@ -110,6 +114,7 @@ import domainapp.dom.reserva.estado.Solicitada;
 
 
 @DomainObject(objectType="RESERVA")
+
 
 public class Reserva implements CalendarEventable {
 	
@@ -298,12 +303,12 @@ public class Reserva implements CalendarEventable {
     
     @Property()
     @javax.jdo.annotations.Column(allowsNull="false")
-    private int numHues;
-    public int getNumHues() {
+    private Integer numHues;
+    public Integer getNumHues() {
         return numHues;
     }
    
-    public void setNumHues(final int numHues) {
+    public void setNumHues(final Integer numHues) {
         this.numHues = numHues;
     }
 
@@ -360,7 +365,7 @@ public class Reserva implements CalendarEventable {
     	this.gasto = gasto;
     }
     
-    
+
     
 
 	

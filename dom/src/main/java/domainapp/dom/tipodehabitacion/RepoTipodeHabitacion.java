@@ -1,5 +1,5 @@
 /*
- *	Copyright ( C ) 2017 , GESTION HOSTEL
+ *	Copyright ( C ) 2019 , GESTION HOSTEL
  *
  *   GESTION HOSTEL is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import domainapp.dom.simple.SimpleObject;
-import domainapp.dom.tipodehabitacion.TipodeHabitacion.Ecama;
+
 import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodeprecio;
 import domainapp.dom.tipodehabitacion.TipodeHabitacion.Etipodesexo;
 
@@ -114,7 +114,7 @@ public class RepoTipodeHabitacion {
         obj.setTprecio(tprecio);
         obj.setPrecio(precio);
         obj.setTsexo(tsexo);
-        obj.setDescripcion("Camas: " + camas.toString() + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
+        obj.setDescripcion("Camas: " + camas + ", tipo de precio: " + tprecio.toString() + ", sexo:" + tsexo.toString());
        
         repositoryService.persist(obj);
         return obj;

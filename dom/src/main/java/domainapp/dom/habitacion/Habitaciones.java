@@ -24,6 +24,7 @@
  */
 package domainapp.dom.habitacion;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -121,6 +122,8 @@ public class Habitaciones {
         final Habitacion obj = repositoryService.instantiate(Habitacion.class);
         obj.setName(name);
         obj.setTipodeHabitacion(tipodeHabitacion);
+        
+    	
         repositoryService.persist(obj);
         return obj;
     }

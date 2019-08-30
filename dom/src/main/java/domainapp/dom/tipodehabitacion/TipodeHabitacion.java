@@ -96,19 +96,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         this.camas = camas;
     }
 
-    private Ecama ccama;
     
-    @Persistent
-    @MemberOrder(sequence = "2")
-	@javax.jdo.annotations.Column(allowsNull="false")
-	
-    public Ecama getCama() {
-    	return ccama;
-    }
-    
-    public void setCama(Ecama ccama)  {
-    	this.ccama = ccama;
-    }
     
     private Etipodeprecio tprecio;
 
@@ -188,10 +176,7 @@ public class TipodeHabitacion implements Comparable<TipodeHabitacion> {
         return ObjectContracts.compare(this, other, "name");
     }
 
-    public enum Ecama{
-    	
-	uno,dos,tres,cuatro
-	}
+    
     public enum Etipodeprecio{
     	
     	Privada,Dormis
