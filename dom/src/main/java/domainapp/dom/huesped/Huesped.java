@@ -129,6 +129,7 @@ public class Huesped implements Comparable<Huesped> {
         this.email = email;
     }
     
+    /*
     private String domicilio;
     @javax.jdo.annotations.Column(allowsNull="true")
     public String getDomicilio() {
@@ -138,7 +139,7 @@ public class Huesped implements Comparable<Huesped> {
     public void setDomicilio(final String domicilio) {
         this.domicilio = domicilio;
     }
-    
+    */
     
     private ListaPais pais;
     

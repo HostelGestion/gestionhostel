@@ -35,19 +35,13 @@
                                 <c:property id="name" namedEscaped="true"/>
                                 <c:property id="email" namedEscaped="true"/>
                                 <c:property id="numTel" namedEscaped="true"/>
-                                <c:property id="titularRes" namedEscaped="true"/>
+                                <c:property id="pais" namedEscaped="true"/>
                             </c:fieldSet>
                             
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
-                <bs3:tab name="Metadata">
-                    <bs3:row>
-                        <bs3:col span="12">
-                            <c:fieldSet name="Metadata"/>
-                        </bs3:col>
-                    </bs3:row>
-                </bs3:tab>
+                
                 <bs3:tab name="Más información">
                     <bs3:row>
                         <bs3:col span="12">

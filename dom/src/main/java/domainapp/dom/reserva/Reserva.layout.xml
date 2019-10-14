@@ -52,13 +52,7 @@
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
-                <bs3:tab name="Metadata">
-                    <bs3:row>
-                        <bs3:col span="12">
-                            <c:fieldSet name="Metadata"/>
-                        </bs3:col>
-                    </bs3:row>
-                </bs3:tab>
+                
                 <bs3:tab name="Other">
                     <bs3:row>
                         <bs3:col span="12">

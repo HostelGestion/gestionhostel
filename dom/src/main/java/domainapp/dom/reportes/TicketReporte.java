@@ -28,6 +28,7 @@ package domainapp.dom.reportes;
 import java.math.BigDecimal;
 import domainapp.dom.caja.Caja;
 import domainapp.dom.huesped.Huesped;
+import domainapp.dom.reserva.Reserva;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,18 @@ public class TicketReporte {
 	public String getFechaDePago() {return fechaDePago;}
 	public void setFechaDePago(String fechaDePago)
 	{this.fechaDePago = fechaDePago;}
+	
+	private Reserva reserva;
+	public Reserva getReserva() {return reserva;}
+	public void setReserva(Reserva reserva)
+	{this.reserva = reserva;}
+	
+	private Double monto;
+	
+	public double getMonto() {return monto;}
+	public void setMonto(Double monto)
+	{this.monto = monto;}
+	
 /*
 	private BigDecimal valor;
 	public BigDecimal getValor() {return valor;}

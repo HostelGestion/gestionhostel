@@ -34,7 +34,10 @@ import java.util.List;
 
 import domainapp.dom.reserva.RepoReserva;
 import domainapp.dom.reserva.Reserva;
-
+import domainapp.dom.habitacion.Habitaciones;
+import domainapp.dom.habitacion.Habitacion;
+import domainapp.dom.huesped.Huesped;
+import domainapp.dom.huesped.Huespedes;
 
 
 @ViewModel
@@ -43,10 +46,19 @@ public class HomePageViewModel {
     //region > title
     public String title() {
     	
-    	if (getReservas().size() < 1) {
-    		return "Cargue Húesped y Habitación para poder hacer su primer Reserva";
-    	}
+    	//if (getReservas().size() < 1) {
+    		//return "Cargue Húesped para poder hacer su primer Reserva";
+    	//}
+    	if ((habitaciones.listarHabitaciones().size() < 1)) {
+    		return "Cargue un Tipo de Habitación y luego una Habitación";
+    	} 
     	
+    	if (huespedes.listarHuespedes().size() < 1) {
+    		return "Cargue al Húesped para poder hacer su primer Reserva";
+    	} 	
+    	
+    	
+
     	
     	else
     	{
@@ -81,6 +93,12 @@ public class HomePageViewModel {
 	
 	@javax.inject.Inject
     RepoReserva repoReserva;
+	
+	@javax.inject.Inject
+    Habitaciones habitaciones;
+	
+	@javax.inject.Inject
+    Huespedes huespedes;
     
    
     
